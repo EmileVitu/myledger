@@ -22,6 +22,10 @@ const ExpenseSchema = new Schema({
         type: Number,
         required: true
     },
+    dateExpense: {
+        type: Date,
+        required: true
+    },
     category: {
         type: String,
         required: true
@@ -33,7 +37,7 @@ const ExpenseSchema = new Schema({
     hidden: {
         type: Boolean
     },
-    date: {
+    dateCreated: {
         type: Date, 
         default: Date.now
     }

@@ -26,6 +26,7 @@ router.post('/', (req, res) => {
         title: req.body.title,
         user: req.body.user,
         amount: req.body.amount,
+        dateExpense: req.body.dateExpense,
         category: req.body.category, 
         comment: req.body.comment
     });
@@ -38,7 +39,7 @@ router.post('/', (req, res) => {
 
 
 // @route DELETE api/expenses
-// @desc create an Expense
+// @desc delete an Expense
 // @access public (will be private)
 router.delete('/:id', (req, res) => {
     Expense
@@ -46,6 +47,18 @@ router.delete('/:id', (req, res) => {
         .then(expense => expense.remove().then(() => res.json({ success: true })))
         .catch(err => res.status(404).json({ success: false }))
 })
+
+
+// @route UPDATE api/expenses
+// @desc update an Expense
+// @access public (will be private)
+// router.update('/:id', (req, res) => {
+//     Expense
+//         .findById(req.params.id)
+//         .then(expense => expense.remove().then(() => res.json({ success: true })))
+//         .catch(err => res.status(404).json({ success: false }))
+// })
+
 
 // To export our it
 module.exports = router
