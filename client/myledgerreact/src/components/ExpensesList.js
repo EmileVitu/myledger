@@ -52,10 +52,20 @@ class ExpensesList extends Component {
                         Add Expense
                 </Button>
                 <ListGroup>
-                    <TransitionGroup className="expenses-list">
+                    <TransitionGroup className='expenses-list'>
                         {expenses.map(({ id, title }) => (
-                            <CSSTransition key={id} timeout={500} classNames="fade">
+                            <CSSTransition key={id} timeout={500} classNames='fade'>
                                 <ListGroupItem>
+                                    <Button
+                                        className='remove-btn'
+                                        color='danger' 
+                                        size='sm' 
+                                        onClick={() => {
+                                            this.setState(state => ({
+                                                expenses: state.expenses.filter(expense => expense.id !== id)
+                                            }))
+                                        }}
+                                    >&times;</Button>
                                     {title}
                                 </ListGroupItem>
                             </CSSTransition>
