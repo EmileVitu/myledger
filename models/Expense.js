@@ -19,7 +19,7 @@ const ExpenseSchema = new Schema({
         required: true
     },
     amount: {
-        type: Number;
+        type: Number,
         required: true
     },
     category: {

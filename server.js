@@ -6,10 +6,14 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const db = require('./config/keys').mongoURI
+const expenses = require('./routes/api/expenses')
 
 
 // Initialising express with a variable we will call app
 const app = express()
+// Then we can set up the parser to decrypt the post body requests
+app.use(express.json())
+
 
 
 // Connecting to the database
@@ -20,6 +24,10 @@ mongoose
     })
     .then(() => console.log('MongoDB for myledger connected !'))
     .catch(err => console.log(err))
+
+
+// The server routes
+app.use('/api/expenses', expenses)
 
 
 // Setting up the server running
