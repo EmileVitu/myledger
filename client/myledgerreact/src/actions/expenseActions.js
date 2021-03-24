@@ -1,4 +1,4 @@
-import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE } from './types'
+import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE, EXPENSES_LOADING } from './types'
 
 
 export const getExpenses = () => {
@@ -18,5 +18,11 @@ export const deleteExpense = (id) => {
     return {
         type: DELETE_EXPENSE, 
         payload: id
+    }
+}
+
+export const setExpensesLoading = () => {
+    return {
+        type: EXPENSES_LOADING
     }
 }
