@@ -26,7 +26,7 @@ class ExpensesList extends Component {
             <Container>
                 <ListGroup>
                     <TransitionGroup className='expenses-list'>
-                        {expenses.map(({ id, title }) => (
+                        {expenses.map(({ id, title, user, amount, category, dateExpense, comment }) => (
                             <CSSTransition key={id} timeout={500} classNames='fade'>
                                 <ListGroupItem>
                                     <Button
@@ -35,7 +35,7 @@ class ExpensesList extends Component {
                                         size='sm' 
                                         onClick={this.onDeleteClick.bind(this, id)}
                                     >&times;</Button>
-                                    {title}
+                                    {title} - {user} - {amount} - {dateExpense} - {category} - {comment}
                                 </ListGroupItem>
                             </CSSTransition>
                         ))}

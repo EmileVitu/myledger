@@ -17,12 +17,12 @@ import { v1 as uuid } from 'uuid'
 class ExpenseModal extends Component {
     state = {
         modal: false, 
-        title: ''
-        // user: '',
-        // amount: '', 
-        // dateExpense: '',
-        // category: '',
-        // comment: ''
+        title: '',
+        user: '',
+        amount: '',
+        dateExpense: '',
+        category: '',
+        comment: ''
     }
 
     toggle = () => {
@@ -40,7 +40,12 @@ class ExpenseModal extends Component {
 
         const newExpense = {
             id: uuid(),
-            title: this.state.title
+            title: this.state.title,
+            user: this.state.user,
+            amount: this.state.amount,
+            dateExpense: this.state.dateExpense,
+            category: this.state.category,
+            comment: this.state.comment
         }
         // Add expense via addExpense action
         this.props.addExpense(newExpense)
@@ -65,7 +70,8 @@ class ExpenseModal extends Component {
                     <ModalBody>
                         <Form onSubmit={this.onSubmit}>
                             <FormGroup>
-                                <Label for='expense'>Expense</Label>
+
+                                <Label for='expense'>Title of the expense</Label>
                                 <Input
                                     type='text' 
                                     name='title' 
@@ -73,6 +79,51 @@ class ExpenseModal extends Component {
                                     placeholder='Add an expense' 
                                     onChange={this.onChange} 
                                 />
+
+                                <Label for='expense'>User</Label>
+                                <Input
+                                    type='text' 
+                                    name='user' 
+                                    id='expense' 
+                                    placeholder='Add the user' 
+                                    onChange={this.onChange} 
+                                />
+
+                                <Label for='expense'>Amount</Label>
+                                <Input
+                                    type='text'
+                                    name='amount' 
+                                    id='expense' 
+                                    placeholder='Add the amount' 
+                                    onChange={this.onChange} 
+                                />
+
+                                <Label for='expense'>Date of the expense</Label>
+                                <Input
+                                    type='text' 
+                                    name='dateExpense' 
+                                    id='expense' 
+                                    placeholder='Add a date for your expense' 
+                                    onChange={this.onChange} 
+                                />
+
+                                <Label for='expense'>Category</Label>
+                                <Input
+                                    type='text' 
+                                    name='category' 
+                                    id='expense' 
+                                    placeholder='Add a category' 
+                                    onChange={this.onChange} 
+                                />                              
+                                <Label for='expense'>Comment</Label>
+                                <Input
+                                    type='text' 
+                                    name='comment' 
+                                    id='expense' 
+                                    placeholder='Add a comment' 
+                                    onChange={this.onChange} 
+                                />
+
                                 <Button
                                     color="dark"
                                     style={{marginTop: '2rem'}}
