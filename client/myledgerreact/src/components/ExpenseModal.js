@@ -32,7 +32,7 @@ class ExpenseModal extends Component {
     }
 
     onChange = (e) => {
-        this.setState({ [e.target.title]: e.target.value })
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     onSubmit = (e) => {
@@ -42,9 +42,9 @@ class ExpenseModal extends Component {
             id: uuid(),
             title: this.state.title
         }
-
+        // Add expense via addExpense action
         this.props.addExpense(newExpense)
-
+        // Close the modal
         this.toggle()
     }
 
@@ -56,6 +56,7 @@ class ExpenseModal extends Component {
                     style= {{marginBottom: '2rem'}}
                     onClick={this.toggle}
                 >Add Expense</Button>
+
                 <Modal
                     isOpen={this.state.modal}
                     toggle={this.toggle}

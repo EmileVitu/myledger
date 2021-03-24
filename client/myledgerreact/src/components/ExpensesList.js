@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
-import { v1 as uuid } from 'uuid'
 import { connect } from 'react-redux'
 import { getExpenses, deleteExpense } from '../actions/expenseActions'
 import PropTypes from 'prop-types'
@@ -25,17 +24,6 @@ class ExpensesList extends Component {
         const { expenses } = this.props.expense
         return(
             <Container>
-                {/* <Button 
-                    color= 'dark' 
-                    style={{marginBottom: '2rem'}} 
-                    onClick={() => {
-                        const title = prompt('Enter Expense')
-                        if(title) {
-                            this.setState(state => ({
-                                expenses: [...state.expenses, { id: uuid(), title }]
-                            }))
-                        }
-                    }}>Add Expense</Button> */}
                 <ListGroup>
                     <TransitionGroup className='expenses-list'>
                         {expenses.map(({ id, title }) => (
