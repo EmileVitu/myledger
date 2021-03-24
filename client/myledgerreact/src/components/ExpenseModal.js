@@ -11,7 +11,6 @@ import {
 } from 'reactstrap'
 import { connect } from 'react-redux'
 import { addExpense } from '../actions/expenseActions'
-import { v1 as uuid } from 'uuid'
 
 
 class ExpenseModal extends Component {
@@ -37,9 +36,7 @@ class ExpenseModal extends Component {
 
     onSubmit = (e) => {
         e.preventDefault()
-
         const newExpense = {
-            id: uuid(),
             title: this.state.title,
             user: this.state.user,
             amount: this.state.amount,
@@ -47,9 +44,7 @@ class ExpenseModal extends Component {
             category: this.state.category,
             comment: this.state.comment
         }
-        // Add expense via addExpense action
         this.props.addExpense(newExpense)
-        // Close the modal
         this.toggle()
     }
 
