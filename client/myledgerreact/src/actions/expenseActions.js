@@ -1,10 +1,22 @@
 import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE, EXPENSES_LOADING } from './types'
+import axios from 'axios'
 
+// export const getExpenses = () => {
+//     return {
+//         type: GET_EXPENSES
+//     }
+// }
 
-export const getExpenses = () => {
-    return {
-        type: GET_EXPENSES
-    }
+export const getExpenses = () => dispatch => {
+    dispatch(setExpensesLoading())
+    axios
+        .get('/api/expenses')
+        .then(res =>
+            dispatch({
+                type: GET_EXPENSES,
+                payload: res.data
+            })
+        )
 }
 
 export const addExpense = (expense) => {

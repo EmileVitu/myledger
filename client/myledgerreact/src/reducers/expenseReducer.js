@@ -38,7 +38,9 @@ export default function(state = initialState, action) {
     switch(action.type) {
         case GET_EXPENSES:
             return {
-                ...state
+                ...state,
+                expenses: action.payload,
+                loading: false
             }
         case ADD_EXPENSE: 
             return {
