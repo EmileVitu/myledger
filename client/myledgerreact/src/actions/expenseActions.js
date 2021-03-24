@@ -1,11 +1,6 @@
 import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE, EXPENSES_LOADING } from './types'
 import axios from 'axios'
 
-// export const getExpenses = () => {
-//     return {
-//         type: GET_EXPENSES
-//     }
-// }
 
 export const getExpenses = () => dispatch => {
     dispatch(setExpensesLoading())
@@ -19,18 +14,26 @@ export const getExpenses = () => dispatch => {
         )
 }
 
-export const addExpense = (expense) => {
-    return {
-        type: ADD_EXPENSE, 
-        payload: expense
-    }
+export const addExpense = (expense) => dispatch => {
+    axios
+        .post('/api/expenses', expense)
+        .then(res =>
+            dispatch({
+                type: ADD_EXPENSE, 
+                payload: res.data
+            })
+        )
 }
 
-export const deleteExpense = (id) => {
-    return {
-        type: DELETE_EXPENSE, 
-        payload: id
-    }
+export const deleteExpense = (_id) => dispatch => {
+    axios
+        .delete(`/api/expenses/${_id}`)
+        .then(res => 
+            dispatch({
+                type: DELETE_EXPENSE, 
+                payload: _id
+            })
+        )
 }
 
 export const setExpensesLoading = () => {
