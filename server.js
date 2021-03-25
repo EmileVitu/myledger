@@ -5,8 +5,10 @@
 // Importing packages and dependencies
 const express = require('express')
 const mongoose = require('mongoose')
-const db = require('./config/keys').mongoURI
+const config = require('config')
 
+// const db = require('./config/keys').mongoURI
+const db = config.get('mongoURI')
 
 // Initialising express with a variable we will call app
 const app = express()
