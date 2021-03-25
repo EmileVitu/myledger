@@ -6,7 +6,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const db = require('./config/keys').mongoURI
-const expenses = require('./routes/api/expenses')
 
 
 // Initialising express with a variable we will call app
@@ -27,8 +26,8 @@ mongoose
 
 
 // The server routes
-app.use('/api/expenses', expenses)
-
+app.use('/api/expenses', require('./routes/api/expenses'))
+app.use('/api/users', require('./routes/api/users'))
 
 // Setting up the server running
 const port = process.env.PORT || 5000
