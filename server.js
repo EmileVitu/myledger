@@ -5,9 +5,10 @@
 // Importing packages and dependencies
 const express = require('express')
 const mongoose = require('mongoose')
-const db = require('./config/keys').mongoURI
-const expenses = require('./routes/api/expenses')
+const config = require('config')
 
+// const db = require('./config/keys').mongoURI
+const db = config.get('mongoURI')
 
 // Initialising express with a variable we will call app
 const app = express()
@@ -20,15 +21,17 @@ app.use(express.json())
 mongoose
     .connect(db, { 
         useNewUrlParser: true, 
-        useUnifiedTopology: true 
+        useUnifiedTopology: true,
+        useCreateIndex: true 
     })
     .then(() => console.log('MongoDB for myledger connected !'))
     .catch(err => console.log(err))
 
 
 // The server routes
-app.use('/api/expenses', expenses)
-
+app.use('/api/expenses', require('./routes/api/expenses'))
+app.use('/api/users', require('./routes/api/users'))
+app.use('/api/auth', require('./routes/api/auth'))
 
 // Setting up the server running
 const port = process.env.PORT || 5000

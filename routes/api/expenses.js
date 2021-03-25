@@ -5,6 +5,7 @@
 const express = require('express')
 const router = express.Router()
 const Expense = require('../../models/Expense')
+const auth = require('../../middleware/auth')
 
 
 // @route GET api/expenses
@@ -47,6 +48,18 @@ router.delete('/:id', (req, res) => {
         .then(expense => expense.remove().then(() => res.json({ success: true })))
         .catch(err => res.status(404).json({ success: false }))
 })
+
+
+// @route GET api/auth/user
+// @desc get user data
+// @access private
+router.get('/user', auth, (req, res) => {
+    User.findById(req.user.id)
+        .select('-password')
+        .then(user => res.json(user))
+})
+
+
 
 
 // @route UPDATE api/expenses
