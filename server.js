@@ -19,7 +19,8 @@ app.use(express.json())
 mongoose
     .connect(db, { 
         useNewUrlParser: true, 
-        useUnifiedTopology: true 
+        useUnifiedTopology: true,
+        useCreateIndex: true 
     })
     .then(() => console.log('MongoDB for myledger connected !'))
     .catch(err => console.log(err))

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
-    "client": "npm start --prefix client/myledgerreact", 
+    "client": "npm start --prefix client/myledgerreact",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/EmileVitu/myledger#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "concurrently": "^6.0.0",
     "express": "^4.17.1",
     "mongoose": "^5.12.2"
