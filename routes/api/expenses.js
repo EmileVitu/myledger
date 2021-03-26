@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 // @route POST api/expenses
 // @desc create an Expense
 // @access public (will be private)
-router.post('/', (req, res) => {
+router.post('/', auth, (req, res) => {
     const newExpense = new Expense({
         title: req.body.title,
         user: req.body.user,
@@ -42,7 +42,7 @@ router.post('/', (req, res) => {
 // @route DELETE api/expenses
 // @desc delete an Expense
 // @access public (will be private)
-router.delete('/:id', (req, res) => {
+router.delete('/:id', auth, (req, res) => {
     Expense
         .findById(req.params.id)
         .then(expense => expense.remove().then(() => res.json({ success: true })))

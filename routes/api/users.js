@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs')
 const config = require('config')
 const jwt = require('jsonwebtoken')
 
+
+// User model
 const User = require('../../models/User')
 
 
@@ -23,7 +25,7 @@ router.post('/', (req, res) => {
         .then(user => {
             
             // If the user exist
-            if(user) {return res.status(400).json({ msg: 'User already exists' })}
+            if(user) return res.status(400).json({ msg: 'User already exists' })
             
             // If the user doesn't exist
             const newUser = new User({
@@ -43,7 +45,7 @@ router.post('/', (req, res) => {
                             .then(user => {
                                 jwt.sign(
                                     { id: user.id },
-                                    config.get('jwtSecret'),
+                                    config.get('jwtSecret'), // ???
                                     { expiresIn: 3600 },
                                     (err, token) => {
                                         if(err) throw err

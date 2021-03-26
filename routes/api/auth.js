@@ -26,32 +26,35 @@ router.post('/', (req, res) => {
         .then(user => {
             
             // If the user exists
-            if(!user) {return res.status(400).json({ msg: 'User does not exists' })}
-            
-            // Validate password
-            bcrypt.compare(password, user.password)
-                .then(isMatch => {
-                    if(!isMatch) return res.status(400).json({msg: 'Invalid credentials'})
-                })
-
-                jwt.sign(
-                    { id: user.id },
-                    config.get('jwtSecret'),
-                    { expiresIn: 3600 }, 
-                    (err, token) => {
-                        if(err) throw err
-                        res.json({
-                            token,
-                            user: {
-                                id: user.id, 
-                                name: user.name,
-                                email: user.email
-                            }
-                        })
-                    }
-                )
+            if(!user) return res.status(400).json({ msg: 'User does not exists' })
+            else {
+                // Validate password
+                bcrypt
+                    .compare(password, user.password)
+                    .then(isMatch => {
+                        if(!isMatch) return res.status(400).json({ msg: 'Invalid credentials' })
+                        else {
+                            jwt.sign(
+                                { id: user.id },
+                                config.get('jwtSecret'),
+                                { expiresIn: 3600 }, 
+                                (err, token) => {
+                                    if(err) throw err
+                                    res.json({
+                                        token,
+                                        user: {
+                                            id: user.id, 
+                                            name: user.name,
+                                            email: user.email
+                                        }
+                                    })
+                                }
+                            )
+                        }
+                    })
+            }
         })
-});
+})
 
 // @route GET api/auth/user
 // @desc get user data
