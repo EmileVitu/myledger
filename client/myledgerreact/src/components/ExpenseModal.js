@@ -11,6 +11,7 @@ import {
 } from 'reactstrap'
 import { connect } from 'react-redux'
 import { addExpense } from '../actions/expenseActions'
+import PropTypes from 'prop-types'
 
 
 class ExpenseModal extends Component {
@@ -22,6 +23,10 @@ class ExpenseModal extends Component {
         dateExpense: '',
         category: '',
         comment: ''
+    }
+
+    static propTypes = {
+        isAuthenticated: PropTypes.bool
     }
 
     toggle = () => {
@@ -51,11 +56,15 @@ class ExpenseModal extends Component {
     render() {
         return(
             <div>
-                <Button
-                    color='dark'
-                    style= {{marginBottom: '2rem'}}
-                    onClick={this.toggle}
-                >Add Expense</Button>
+                { this.props.isAuthenticated ?  
+                    <Button
+                        color='dark'
+                        style= {{marginBottom: '2rem'}}
+                        onClick={this.toggle}
+                    >Add Expense</Button> : 
+                    <h4 className='mb-3 ml-4'>Please login or register to manage expenses</h4> }
+
+
 
                 <Modal
                     isOpen={this.state.modal}
@@ -135,7 +144,8 @@ class ExpenseModal extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    expense: state.expense
+    expense: state.expense,
+    isAuthenticated: state.auth.isAuthenticated
 })
 
 export default connect(mapStateToProps, { addExpense })(ExpenseModal)
