@@ -6,20 +6,29 @@ import { Provider } from 'react-redux'
 import store from './store'
 import ExpenseModal from './components/ExpenseModal'
 import { Container } from 'reactstrap'
+import { loadUser } from './actions/authActions'
+import React, { Component } from 'react'
 
-function App() {
-  return (
-    <Provider store={store}>
-      <div className="App">
-        <LedgerNavBar />
-        <Container>
-          <ExpenseModal />
-          <h1 className="text-align-center">Welcome to my Ledger MERN app !</h1>
-          <ExpensesList />
-        </Container>
-      </div>
-    </Provider>
-  );
+
+class App extends Component {
+  componentDidMount() {
+    store.dispatch(loadUser())
+  }
+ 
+  render() {
+    return (
+      <Provider store={store}>
+        <div className="App">
+          <LedgerNavBar />
+          <Container>
+            <ExpenseModal />
+            <h1 className="text-align-center">Welcome to my Ledger MERN app !</h1>
+            <ExpensesList />
+          </Container>
+        </div>
+      </Provider>
+    );
+  }
 }
 
 export default App
