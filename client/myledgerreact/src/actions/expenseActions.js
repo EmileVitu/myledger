@@ -1,5 +1,7 @@
-import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE, EXPENSES_LOADING } from './types'
 import axios from 'axios'
+import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE, EXPENSES_LOADING } from './types'
+import { tokenConfig } from './authActions'
+import { returnErrors } from './errorActions'
 
 
 export const getExpenses = () => dispatch => {
@@ -10,30 +12,30 @@ export const getExpenses = () => dispatch => {
             dispatch({
                 type: GET_EXPENSES,
                 payload: res.data
-            })
-        )
+            }))
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
 
-export const addExpense = (expense) => dispatch => {
+export const addExpense = (expense) => (dispatch, getState) => {
     axios
-        .post('/api/expenses', expense)
+        .post('/api/expenses', expense, tokenConfig(getState))
         .then(res =>
             dispatch({
                 type: ADD_EXPENSE, 
                 payload: res.data
-            })
-        )
+            }))
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
 
-export const deleteExpense = (_id) => dispatch => {
+export const deleteExpense = (_id) => (dispatch, getState) => {
     axios
-        .delete(`/api/expenses/${_id}`)
+        .delete(`/api/expenses/${_id}`, tokenConfig(getState))
         .then(res => 
             dispatch({
                 type: DELETE_EXPENSE, 
                 payload: _id
-            })
-        )
+            }))
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
 
 export const setExpensesLoading = () => {

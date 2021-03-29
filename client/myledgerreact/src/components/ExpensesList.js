@@ -9,7 +9,8 @@ class ExpensesList extends Component {
 
     static propTypes = {
         getExpenses: PropTypes.func.isRequired, 
-        expense: PropTypes.object.isRequired
+        expense: PropTypes.object.isRequired,
+        isAuthenticated: PropTypes.bool
     }
 
     componentDidMount() {
@@ -29,12 +30,14 @@ class ExpensesList extends Component {
                         {expenses.map(({ _id, title, user, amount, category, dateExpense, comment }) => (
                             <CSSTransition key={_id} timeout={500} classNames='fade'>
                                 <ListGroupItem>
-                                    <Button
-                                        className='remove-btn'
-                                        color='danger' 
-                                        size='sm' 
-                                        onClick={this.onDeleteClick.bind(this, _id)}
-                                    >&times;</Button>
+                                    { this.props.isAuthenticated ? 
+                                        <Button
+                                            className='remove-btn'
+                                            color='danger' 
+                                            size='sm' 
+                                            onClick={this.onDeleteClick.bind(this, _id)}
+                                        >&times;</Button> : null }
+
                                     {title} - {user} - {amount} - {dateExpense} - {category} - {comment}
                                 </ListGroupItem>
                             </CSSTransition>
@@ -49,7 +52,8 @@ class ExpensesList extends Component {
 
 
 const mapStateToProps = (state) => ({
-    expense: state.expense
+    expense: state.expense,
+    isAuthenticated: state.auth.isAuthenticated
 })
 
 

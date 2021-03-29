@@ -22,7 +22,6 @@ class App extends Component {
           <LedgerNavBar />
           <Container>
             <ExpenseModal />
-            <h1 className="text-align-center">Welcome to my Ledger MERN app !</h1>
             <ExpensesList />
           </Container>
         </div>
