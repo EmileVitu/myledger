@@ -61,67 +61,26 @@ router.get('/user', auth, (req, res) => {
 
 
 
-
 // @route UPDATE api/expenses
 // @desc update an Expense
 // @access public (will be private)
-// router.post('/update/:id', (req, res) => {
-//     console.log("req.body: ", req.body);
-  
-//     try {
-//       const { title,user,amount,dateExpense,category,comment } = req.body;
-  
-//       const response = Expense.findByIdAndUpdate(req.params.id, {title,user,amount,dateExpense,category,comment}, { new: false });
-  
-//       if (!response) return res.status(400).send("Data not found");
-  
-//       res.json("Update complete");
-//     } catch (err) {
-//       res.status(500).send("Something went wrong");
-// //     }
-// //   })
-router.patch('/:id', auth, (req, res) => {
-  const { title,user,amount,dateExpense,category,comment } = req.body
-
-  Expense
-      .findById(req.params.id)
-      .then(expense => expense
-          .updateOne(
-              req.params.id, 
-              { title,
-                user,
-                amount,
-                dateExpense,
-                category,
-                comment }, 
-              { new: false })
-          .then(() => res.json({ success: true })))
-      .catch(err => res.status(404).json({ success: false }))
+router.post('/:id', auth, (req, res) => {
+    const { title,user,amount,dateExpense,category,comment } = req.body
+    
+    Expense
+        .updateOne(
+            { _id: req.params.id },
+            { title,
+              user,
+              amount,
+              dateExpense,
+              category,
+              comment },
+            { new: false })
+        .then(() => res.json({ success: true }))
+        .catch(err => res.status(404).json({ success: false }))
 })
 
-
-// router.put('/:id', (req, res) => {
-
-//   User.findByIdAndUpdate({ _id: req.params.id },
-
-//     {
-//       title: req.body.title,
-//       user: req.body.user,
-//       amount: req.body.amount,
-//       dateExpense: req.body.dateExpense,
-//       category: req.body.category,
-//       comment: req.body.comment
-//     }, function (err, expense) {
-//       if (err) res.json(err);
-//       else {
-//         console.log(expense)
-//         // don't forget to send a response
-//         res.json({
-//           "message": "works!",
-//         });
-//       }
-//     });
-// })
 
 // To export it
 module.exports = router
