@@ -32,7 +32,7 @@ mongoose
 app.use('/api/expenses', require('./routes/api/expenses'))
 app.use('/api/users', require('./routes/api/users'))
 app.use('/api/auth', require('./routes/api/auth'))
-app.use('/api/update', require('./routes/api/expenses'))
+// app.use('/api/update', require('./routes/api/expenses'))
 
 // Setting up the server running
 const port = process.env.PORT || 5000
