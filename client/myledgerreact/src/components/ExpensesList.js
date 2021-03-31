@@ -21,6 +21,10 @@ class ExpensesList extends Component {
         this.props.deleteExpense(_id)
     }
 
+    onUpdateClick = (_id) => {
+        console.log('change an expense!')
+    }
+
     render() {
         const { expenses } = this.props.expense
         return(
@@ -37,6 +41,13 @@ class ExpensesList extends Component {
                                             size='sm' 
                                             onClick={this.onDeleteClick.bind(this, _id)}
                                         >&times;</Button> : null }
+                                    { this.props.isAuthenticated ? 
+                                        <Button
+                                            className='edit-btn'
+                                            color='info' 
+                                            size='sm' 
+                                            onClick={this.onUpdateClick.bind(this, _id)}
+                                        >&raquo;</Button> : null }
 
                                     {title} - {user} - {amount} - {dateExpense} - {category} - {comment}
                                 </ListGroupItem>
