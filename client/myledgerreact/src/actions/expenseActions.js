@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE, EXPENSES_LOADING } from './types'
+import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE, EXPENSES_LOADING, UPDATE_EXPENSE } from './types'
 import { tokenConfig } from './authActions'
 import { returnErrors } from './errorActions'
 
@@ -42,4 +42,15 @@ export const setExpensesLoading = () => {
     return {
         type: EXPENSES_LOADING
     }
+}
+
+export const updateExpense = (_id, expense) => (dispatch, getState) => {
+    axios
+        .post(`/api/expense/${_id}`, expense, tokenConfig(getState))
+        .then(res =>
+            dispatch({
+                type: UPDATE_EXPENSE, 
+                payload: res.data, _id // odd ?
+            }))
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }

@@ -1,4 +1,4 @@
-import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE, EXPENSES_LOADING } from '../actions/types'
+import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE, EXPENSES_LOADING, UPDATE_EXPENSE } from '../actions/types'
 
 
 const initialState = {
@@ -27,6 +27,11 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: true
+            }
+        case UPDATE_EXPENSE:
+            return {
+                ...state,
+                expenses: [action.payload, ...state.expenses]
             }
         default:
             return state
