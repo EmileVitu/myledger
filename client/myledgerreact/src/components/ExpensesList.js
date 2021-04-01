@@ -41,7 +41,8 @@ class ExpensesList extends Component {
                                                 onClick={this.onDeleteClick.bind(this, _id)}
                                             >&times;</Button>
                                             <UpdateModal />
-                                        </> : null }
+                                        </> 
+                                        : null }
 
                                     {title} - {user} - {amount} - {dateExpense} - {category} - {comment}
                                 </ListGroupItem>

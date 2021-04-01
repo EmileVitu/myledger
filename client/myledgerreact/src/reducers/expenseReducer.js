@@ -31,7 +31,7 @@ export default function(state = initialState, action) {
         case UPDATE_EXPENSE:
             return {
                 ...state,
-                expenses: [action.payload, ...state.expenses]
+                expenses: state.expenses.map(expense => expense._id === action.payload.data._id ? action.payload.expense : expense)
             }
         default:
             return state

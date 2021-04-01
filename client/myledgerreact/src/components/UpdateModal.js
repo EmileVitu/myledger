@@ -26,7 +26,8 @@ class UpdateModal extends Component {
     }
 
     static propTypes = {
-        isAuthenticated: PropTypes.bool
+        isAuthenticated: PropTypes.bool,
+        expense: PropTypes.object.isRequired
     }
 
     toggle = () => {
@@ -40,16 +41,17 @@ class UpdateModal extends Component {
     }
 
     onSubmit = (e) => {
-        // e.preventDefault()
-        // const newExpense = {
-        //     title: this.state.title,
-        //     user: this.state.user,
-        //     amount: this.state.amount,
-        //     dateExpense: this.state.dateExpense,
-        //     category: this.state.category,
-        //     comment: this.state.comment
-        // }
-        // this.props.addExpense(newExpense)
+        e.preventDefault()
+        const updatedExpense = {
+            title: this.state.title,
+            user: this.state.user,
+            amount: this.state.amount,
+            dateExpense: this.state.dateExpense,
+            category: this.state.category,
+            comment: this.state.comment
+        }
+        this.props.updateExpense(updatedExpense)
+        console.log(updatedExpense)
         this.toggle()
     }
 
@@ -63,7 +65,7 @@ class UpdateModal extends Component {
                         className='edit-btn'
                         onClick={this.toggle}
                     >&raquo;</Button> : null }
-{/* Issue in styling both buttons */}
+
                 <Modal
                     isOpen={this.state.modal}
                     toggle={this.toggle}
