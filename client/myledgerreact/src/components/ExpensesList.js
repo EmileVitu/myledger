@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { connect } from 'react-redux'
 import { getExpenses, deleteExpense } from '../actions/expenseActions'
 import PropTypes from 'prop-types'
+import UpdateModal from './UpdateModal'
 
 class ExpensesList extends Component {
 
@@ -23,26 +23,26 @@ class ExpensesList extends Component {
 
     render() {
         const { expenses } = this.props.expense
+
         return(
             <Container>
                 <ListGroup>
-                    <TransitionGroup className='expenses-list'>
-                        {expenses.map(({ _id, title, user, amount, category, dateExpense, comment }) => (
-                            <CSSTransition key={_id} timeout={500} classNames='fade'>
-                                <ListGroupItem>
-                                    { this.props.isAuthenticated ? 
-                                        <Button
-                                            className='remove-btn'
-                                            color='danger' 
-                                            size='sm' 
-                                            onClick={this.onDeleteClick.bind(this, _id)}
-                                        >&times;</Button> : null }
-
-                                    {title} - {user} - {amount} - {dateExpense} - {category} - {comment}
-                                </ListGroupItem>
-                            </CSSTransition>
-                        ))}
-                    </TransitionGroup>
+                    {expenses.map(({ _id, title, user, amount, category, dateExpense, comment, dateCreated }) => (
+                        <ListGroupItem key={_id}>
+                            { this.props.isAuthenticated ? 
+                                <>
+                                    <Button
+                                        className='remove-btn'
+                                        color='danger' 
+                                        size='sm' 
+                                        onClick={this.onDeleteClick.bind(this, _id)}
+                                    >&times;</Button>
+                                    <UpdateModal parentId={_id} />
+                                </> 
+                                : null }
+                            {_id} - {dateCreated} - {title} - {user} - {amount} - {dateExpense} - {category} - {comment}
+                        </ListGroupItem>
+                    ))}
                 </ListGroup>
             </Container>
         )

@@ -7,15 +7,16 @@ import {
     Form, 
     FormGroup, 
     Label, 
-    Input } from 'reactstrap'
+    Input
+} from 'reactstrap'
 import { connect } from 'react-redux'
-import { addExpense } from '../actions/expenseActions'
+import { updateExpense } from '../actions/expenseActions'
 import PropTypes from 'prop-types'
 
 
-class ExpenseModal extends Component {
+class UpdateModal extends Component {
     state = {
-        modal: false, 
+        modal: false,
         title: '',
         user: '',
         amount: '',
@@ -25,7 +26,8 @@ class ExpenseModal extends Component {
     }
 
     static propTypes = {
-        isAuthenticated: PropTypes.bool
+        isAuthenticated: PropTypes.bool,
+        expense: PropTypes.object.isRequired
     }
 
     toggle = () => {
@@ -40,7 +42,8 @@ class ExpenseModal extends Component {
 
     onSubmit = (e) => {
         e.preventDefault()
-        const newExpense = {
+        const updatedExpense = {
+            _id: this.props.parentId,
             title: this.state.title,
             user: this.state.user,
             amount: this.state.amount,
@@ -48,26 +51,26 @@ class ExpenseModal extends Component {
             category: this.state.category,
             comment: this.state.comment
         }
-        this.props.addExpense(newExpense)
+        this.props.updateExpense(updatedExpense)
         this.toggle()
     }
 
     render() {
         return(
-            <div>
+            <>
                 { this.props.isAuthenticated ?  
                     <Button
-                        color='dark'
-                        style= {{marginBottom: '2rem'}}
+                        color='info'
+                        size='sm'
+                        className='edit-btn'
                         onClick={this.toggle}
-                    >Add Expense</Button> : 
-                    <h4 className='mb-3 ml-4'>Please login or register to manage expenses</h4> }
+                    >&raquo;</Button> : null }
 
                 <Modal
                     isOpen={this.state.modal}
                     toggle={this.toggle}
                 >
-                    <ModalHeader toggle={this.toggle}>Add to expense list</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>Update this expense</ModalHeader>
                     <ModalBody>
                         <Form onSubmit={this.onSubmit}>
                             <FormGroup>
@@ -129,15 +132,14 @@ class ExpenseModal extends Component {
                                     color="dark"
                                     style={{marginTop: '2rem'}}
                                     block
-                                >Add Expense</Button>
+                                >Update Expense</Button>
                             </FormGroup>
                         </Form>
                     </ModalBody>
                 </Modal>
-            </div>
+            </>
         )
     }
-
 }
 
 const mapStateToProps = (state) => ({
@@ -145,4 +147,4 @@ const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated
 })
 
-export default connect(mapStateToProps, { addExpense })(ExpenseModal)
+export default connect(mapStateToProps, { updateExpense })(UpdateModal)

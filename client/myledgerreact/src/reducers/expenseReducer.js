@@ -1,11 +1,11 @@
-import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE, EXPENSES_LOADING } from '../actions/types'
+import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE, EXPENSES_LOADING, UPDATE_EXPENSE } from '../actions/types'
 
 
 const initialState = {
     expenses: []
 }
 
-export default function(state = initialState, action) {
+export default function expenseReducer(state = initialState, action) {
     switch(action.type) {
         case GET_EXPENSES:
             return {
@@ -27,6 +27,14 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: true
+            }
+        case UPDATE_EXPENSE:
+            return {
+                ...state,
+                expenses: state.expenses.map(expense => 
+                    expense._id === action.payload._id 
+                    ? action.payload.expense 
+                    : expense)
             }
         default:
             return state
