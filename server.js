@@ -59,10 +59,10 @@ app.listen(port, () => console.log(`Server started on port ${port}`))
 
 // redux
 // react-redux
-// redux-devtools-extension
+// redux-devtools-extension  --> removed because of conflict
 // redux-thunk
 // redux-logger
 // axios
 // bootstrap
 // reactstrap
-// react-transition-group
+// react-transition-group --> removed because of conflict

@@ -16,7 +16,7 @@ import PropTypes from 'prop-types'
 
 class UpdateModal extends Component {
     state = {
-        modal: false, 
+        modal: false,
         title: '',
         user: '',
         amount: '',
@@ -43,6 +43,7 @@ class UpdateModal extends Component {
     onSubmit = (e) => {
         e.preventDefault()
         const updatedExpense = {
+            _id: this.props.parentId,
             title: this.state.title,
             user: this.state.user,
             amount: this.state.amount,
@@ -51,7 +52,6 @@ class UpdateModal extends Component {
             comment: this.state.comment
         }
         this.props.updateExpense(updatedExpense)
-        console.log(updatedExpense)
         this.toggle()
     }
 

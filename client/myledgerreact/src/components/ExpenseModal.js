@@ -7,8 +7,7 @@ import {
     Form, 
     FormGroup, 
     Label, 
-    Input
-} from 'reactstrap'
+    Input } from 'reactstrap'
 import { connect } from 'react-redux'
 import { addExpense } from '../actions/expenseActions'
 import PropTypes from 'prop-types'

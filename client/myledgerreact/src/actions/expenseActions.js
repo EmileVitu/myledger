@@ -18,7 +18,7 @@ export const getExpenses = () => dispatch => {
 
 export const addExpense = (expense) => (dispatch, getState) => {
     axios
-        .post('/api/expenses', expense, tokenConfig(getState), console.log(expense))
+        .post('/api/expenses', expense, tokenConfig(getState))
         .then(res =>
             dispatch({
                 type: ADD_EXPENSE, 
@@ -29,7 +29,12 @@ export const addExpense = (expense) => (dispatch, getState) => {
 
 export const updateExpense = (expense, _id) => (dispatch, getState) => {
     axios
-        .post(`/api/expenses/${_id}`, expense, tokenConfig(getState), console.log(expense), console.log(_id))
+        .post(
+            `/api/expenses/${expense._id}`, 
+            expense, 
+            tokenConfig(getState), 
+            console.log(expense), 
+            console.log(expense._id))
         .then(res =>
             dispatch({
                 type: UPDATE_EXPENSE, 

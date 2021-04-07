@@ -5,7 +5,7 @@ const initialState = {
     expenses: []
 }
 
-export default function(state = initialState, action) {
+export default function expenseReducer(state = initialState, action) {
     switch(action.type) {
         case GET_EXPENSES:
             return {
@@ -31,7 +31,7 @@ export default function(state = initialState, action) {
         case UPDATE_EXPENSE:
             return {
                 ...state,
-                expenses: state.expenses.map(expense => expense._id === action.payload.data._id ? action.payload.expense : expense)
+                expenses: state.expenses.map(expense => expense._id === action.payload._id ? action.payload.expense : expense)
             }
         default:
             return state
