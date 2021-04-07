@@ -1,8 +1,17 @@
+// Dependencies
 import React, { Component } from 'react'
-import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap'
 import { connect } from 'react-redux'
-import { getExpenses, deleteExpense } from '../actions/expenseActions'
 import PropTypes from 'prop-types'
+// Functions
+import { getExpenses, deleteExpense } from '../actions/expenseActions'
+// Styling
+import { Container } from '@material-ui/core'
+
+// Must go away
+import { ListGroup, ListGroupItem, Button } from 'reactstrap'
+
+
+
 import UpdateModal from './UpdateModal'
 
 class ExpensesList extends Component {

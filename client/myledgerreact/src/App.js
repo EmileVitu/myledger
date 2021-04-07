@@ -1,16 +1,27 @@
-import './App.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
+// Dependencies
+import React, { Component } from 'react'
+import { Provider } from 'react-redux'
+// Components
 import LedgerNavBar from './components/LedgerNavBar'
 import ExpensesList from './components/ExpensesList'
-import { Provider } from 'react-redux'
-import store from './store'
 import ExpenseModal from './components/ExpenseModal'
-import { Container } from 'reactstrap'
+import store from './store'
+//  Functions
 import { loadUser } from './actions/authActions'
-import React, { Component } from 'react'
+// Styling and UI
+import './App.css'
+import { Container } from '@material-ui/core'
+
+
+// Will need to be removed
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+
+
 
 
 class App extends Component {
+
   componentDidMount() {
     store.dispatch(loadUser())
   }

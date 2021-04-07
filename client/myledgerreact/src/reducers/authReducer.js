@@ -9,7 +9,7 @@ import {
     REGISTER_FAIL } from '../actions/types'
 
 const initialState = {
-    token: localStorage.getItem('token'), // ??? getExpenses or getExpense ???
+    token: localStorage.getItem('token'),
     isAuthenticated: null, 
     isLoading: false, 
     user: null
