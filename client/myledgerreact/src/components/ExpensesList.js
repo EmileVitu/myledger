@@ -5,10 +5,11 @@ import PropTypes from 'prop-types'
 // Functions
 import { getExpenses, deleteExpense } from '../actions/expenseActions'
 // Styling
-import { Container } from '@material-ui/core'
+import { Container, Button } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 // Must go away
-import { ListGroup, ListGroupItem, Button } from 'reactstrap'
+import { ListGroup, ListGroupItem } from 'reactstrap'
 
 
 
@@ -40,12 +41,12 @@ class ExpensesList extends Component {
                         <ListGroupItem key={_id}>
                             { this.props.isAuthenticated ? 
                                 <>
-                                    <Button
-                                        className='remove-btn'
-                                        color='danger' 
-                                        size='sm' 
+                                    <Button 
+                                        variant='contained' 
+                                        color='secondary'
+                                        size='small'
                                         onClick={this.onDeleteClick.bind(this, _id)}
-                                    >&times;</Button>
+                                        ><DeleteIcon />Delete</Button>
                                     <UpdateModal parentId={_id} />
                                 </> 
                                 : null }
