@@ -38,3 +38,31 @@ app.use('/api/auth', require('./routes/api/auth'))
 const port = process.env.PORT || 5000
 // This is to listen to our app on the port variable
 app.listen(port, () => console.log(`Server started on port ${port}`))
+
+
+
+// Extension installed
+
+
+// Server
+
+// bcryptjs
+// concurrently
+// config
+// express
+// mongoose
+// jsonwebtoken
+// nodemon
+
+
+// Client
+
+// redux
+// react-redux
+// redux-devtools-extension
+// redux-thunk
+// redux-logger
+// axios
+// bootstrap
+// reactstrap
+// react-transition-group
