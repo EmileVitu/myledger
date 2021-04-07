@@ -140,7 +140,6 @@ class UpdateModal extends Component {
             </>
         )
     }
-
 }
 
 const mapStateToProps = (state) => ({

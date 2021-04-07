@@ -63,8 +63,6 @@ class ExpenseModal extends Component {
                     >Add Expense</Button> : 
                     <h4 className='mb-3 ml-4'>Please login or register to manage expenses</h4> }
 
-
-
                 <Modal
                     isOpen={this.state.modal}
                     toggle={this.toggle}

@@ -31,7 +31,10 @@ export default function expenseReducer(state = initialState, action) {
         case UPDATE_EXPENSE:
             return {
                 ...state,
-                expenses: state.expenses.map(expense => expense._id === action.payload._id ? action.payload.expense : expense)
+                expenses: state.expenses.map(expense => 
+                    expense._id === action.payload._id 
+                    ? action.payload.expense 
+                    : expense)
             }
         default:
             return state

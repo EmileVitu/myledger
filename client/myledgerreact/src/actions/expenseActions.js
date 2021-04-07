@@ -29,18 +29,14 @@ export const addExpense = (expense) => (dispatch, getState) => {
 
 export const updateExpense = (expense, _id) => (dispatch, getState) => {
     axios
-        .post(
-            `/api/expenses/${expense._id}`, 
-            expense, 
-            tokenConfig(getState), 
-            console.log(expense), 
-            console.log(expense._id))
+        .post(`/api/expenses/${expense._id}`, expense, tokenConfig(getState))
         .then(res =>
             dispatch({
                 type: UPDATE_EXPENSE, 
                 payload: res.data
             }))
-        .catch(err => dispatch(returnErrors(err.response.data, err.response.status, console.log(err))))
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
+    dispatch(getExpenses())
 }
 
 export const deleteExpense = (_id) => (dispatch, getState) => {
