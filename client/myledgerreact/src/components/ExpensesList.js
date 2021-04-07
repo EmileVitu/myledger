@@ -5,11 +5,8 @@ import PropTypes from 'prop-types'
 // Functions
 import { getExpenses, deleteExpense } from '../actions/expenseActions'
 // Styling
-import { Container, Button } from '@material-ui/core'
+import { Container, Button, List, ListItem } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
-
-// Must go away
-import { ListGroup, ListGroupItem } from 'reactstrap'
 
 
 
@@ -36,9 +33,9 @@ class ExpensesList extends Component {
 
         return(
             <Container>
-                <ListGroup>
+                <List>
                     {expenses.map(({ _id, title, user, amount, category, dateExpense, comment, dateCreated }) => (
-                        <ListGroupItem key={_id}>
+                        <ListItem key={_id}>
                             { this.props.isAuthenticated ? 
                                 <>
                                     <Button 
@@ -51,9 +48,9 @@ class ExpensesList extends Component {
                                 </> 
                                 : null }
                             {_id} - {dateCreated} - {title} - {user} - {amount} - {dateExpense} - {category} - {comment}
-                        </ListGroupItem>
+                        </ListItem>
                     ))}
-                </ListGroup>
+                </List>
             </Container>
         )
     }

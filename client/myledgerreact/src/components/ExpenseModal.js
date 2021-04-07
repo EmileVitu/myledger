@@ -1,6 +1,13 @@
+// Dependencies
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+// Functions
+import { addExpense } from '../actions/expenseActions'
+// Styling
+import { Button } from '@material-ui/core'
+
 import {
-    Button, 
     Modal, 
     ModalHeader,
     ModalBody, 
@@ -8,9 +15,7 @@ import {
     FormGroup, 
     Label, 
     Input } from 'reactstrap'
-import { connect } from 'react-redux'
-import { addExpense } from '../actions/expenseActions'
-import PropTypes from 'prop-types'
+
 
 
 class ExpenseModal extends Component {
@@ -57,7 +62,8 @@ class ExpenseModal extends Component {
             <div>
                 { this.props.isAuthenticated ?  
                     <Button
-                        color='dark'
+                        variant='contained'
+                        color='primary'
                         style= {{marginBottom: '2rem'}}
                         onClick={this.toggle}
                     >Add Expense</Button> : 
