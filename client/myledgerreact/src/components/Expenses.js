@@ -9,7 +9,10 @@ import { Container, Button, List, ListItem } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 import UpdateModal from './UpdateModal'
-import ExpenseTable from './ExpenseTable'
+
+
+import { useTable } from 'react-table'
+
 
 class ExpensesList extends Component {
 
@@ -26,6 +29,11 @@ class ExpensesList extends Component {
     onDeleteClick = (_id) => {
         this.props.deleteExpense(_id)
     }
+
+    // tableInstance = useTable({
+    //     columns: COLUMNS,
+    //     data: MOCK_DATA
+    // })
 
     render() {
         const { expenses } = this.props.expense
@@ -50,7 +58,18 @@ class ExpensesList extends Component {
                         </ListItem>
                     ))}
                 </List>
-                <ExpenseTable />
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
             </Container>
         )
     }
