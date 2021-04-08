@@ -59,6 +59,7 @@ app.listen(port, () => console.log(`Server started on port ${port}`))
 
 // redux
 // react-redux
+// react-table
 // redux-devtools-extension  --> removed because of conflict
 // redux-thunk
 // redux-logger
