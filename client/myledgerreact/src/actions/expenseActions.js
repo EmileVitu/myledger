@@ -1,5 +1,10 @@
 import axios from 'axios'
-import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE, EXPENSES_LOADING, UPDATE_EXPENSE } from './types'
+import { 
+    GET_EXPENSES, 
+    ADD_EXPENSE, 
+    DELETE_EXPENSE, 
+    EXPENSES_LOADING, 
+    UPDATE_EXPENSE } from './types'
 import { tokenConfig } from './authActions'
 import { returnErrors } from './errorActions'
 

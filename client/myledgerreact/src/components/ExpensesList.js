@@ -1,8 +1,15 @@
+// Dependencies
 import React, { Component } from 'react'
-import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap'
 import { connect } from 'react-redux'
-import { getExpenses, deleteExpense } from '../actions/expenseActions'
 import PropTypes from 'prop-types'
+// Functions
+import { getExpenses, deleteExpense } from '../actions/expenseActions'
+// Styling
+import { Container, Button, List, ListItem } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
+
+
+
 import UpdateModal from './UpdateModal'
 
 class ExpensesList extends Component {
@@ -26,24 +33,24 @@ class ExpensesList extends Component {
 
         return(
             <Container>
-                <ListGroup>
+                <List>
                     {expenses.map(({ _id, title, user, amount, category, dateExpense, comment, dateCreated }) => (
-                        <ListGroupItem key={_id}>
+                        <ListItem key={_id}>
                             { this.props.isAuthenticated ? 
                                 <>
-                                    <Button
-                                        className='remove-btn'
-                                        color='danger' 
-                                        size='sm' 
+                                    <Button 
+                                        variant='contained' 
+                                        color='secondary'
+                                        size='small'
                                         onClick={this.onDeleteClick.bind(this, _id)}
-                                    >&times;</Button>
+                                        ><DeleteIcon />Delete</Button>
                                     <UpdateModal parentId={_id} />
                                 </> 
                                 : null }
                             {_id} - {dateCreated} - {title} - {user} - {amount} - {dateExpense} - {category} - {comment}
-                        </ListGroupItem>
+                        </ListItem>
                     ))}
-                </ListGroup>
+                </List>
             </Container>
         )
     }

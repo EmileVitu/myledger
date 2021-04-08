@@ -1,4 +1,9 @@
-import { GET_EXPENSES, ADD_EXPENSE, DELETE_EXPENSE, EXPENSES_LOADING, UPDATE_EXPENSE } from '../actions/types'
+import { 
+    GET_EXPENSES, 
+    ADD_EXPENSE, 
+    DELETE_EXPENSE, 
+    EXPENSES_LOADING, 
+    UPDATE_EXPENSE } from '../actions/types'
 
 
 const initialState = {
