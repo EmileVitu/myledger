@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 // Components
 import LedgerNavBar from './components/LedgerNavBar'
-import ExpensesList from './components/ExpensesList'
+// import ExpensesList from './components/ExpensesList'
 import ExpenseModal from './components/ExpenseModal'
 import store from './store'
 //  Functions
@@ -15,6 +15,7 @@ import { Container } from '@material-ui/core'
 
 // Will need to be removed
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Expenses from './components/Expenses'
 
 
 
@@ -33,7 +34,8 @@ class App extends Component {
           <LedgerNavBar />
           <Container>
             <ExpenseModal />
-            <ExpensesList />
+            {/* <ExpensesList /> */}
+            <Expenses />
           </Container>
         </div>
       </Provider>
