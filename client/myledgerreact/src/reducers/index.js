@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
-import expenseReducer from './expenseReducer'
-import authReducer from './authReducer'
-import errorReducer from './errorReducer'
+import { expenseReducer } from './expenseReducer'
+import { authReducer } from './authReducer'
+import { errorReducer } from './errorReducer'
 
 export default combineReducers({
     expense: expenseReducer,

@@ -1,6 +1,5 @@
 // Dependencies
-import React, { Component } from 'react'
-import { Provider } from 'react-redux'
+import React, { useEffect } from 'react'
 // Components
 import LedgerNavBar from './components/LedgerNavBar'
 // import ExpensesList from './components/ExpensesList'
@@ -20,27 +19,55 @@ import Expenses from './components/Expenses'
 
 
 
+function App() {
 
-class App extends Component {
-
-  componentDidMount() {
+  useEffect(() => {
     store.dispatch(loadUser())
-  }
- 
-  render() {
-    return (
-      <Provider store={store}>
-        <div className="App">
-          <LedgerNavBar />
-          <Container>
-            <ExpenseModal />
-            {/* <ExpensesList /> */}
-            <Expenses />
-          </Container>
-        </div>
-      </Provider>
-    );
-  }
+  })
+
+  return (
+      <div className="App">
+        <LedgerNavBar />
+        <Container>
+          <ExpenseModal />
+          {/* <ExpensesList /> */}
+          <Expenses />
+        </Container>
+      </div>
+  );
 }
 
 export default App
+
+
+
+// Here is our previous class component rendering the same thing
+
+// class App extends Component {
+
+//   componentDidMount() {
+//     store.dispatch(loadUser())
+//   }
+ 
+//   render() {
+//     return (
+//       <Provider store={store}>
+//         <div className="App">
+//           <LedgerNavBar />
+//           <Container>
+//             <ExpenseModal />
+//             {/* <ExpensesList /> */}
+//             <Expenses />
+//           </Container>
+//         </div>
+//       </Provider>
+//     );
+//   }
+// }
+
+// export default App
+
+
+
+
+
