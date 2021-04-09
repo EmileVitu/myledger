@@ -10,7 +10,7 @@ const initialState = {
     expenses: []
 }
 
-export default function expenseReducer(state = initialState, action) {
+export const expenseReducer = (state = initialState, action) => {
     switch(action.type) {
         case GET_EXPENSES:
             return {

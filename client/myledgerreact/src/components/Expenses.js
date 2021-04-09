@@ -11,7 +11,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import UpdateModal from './UpdateModal'
 
 
-import { useTable } from 'react-table'
+// import { useTable } from 'react-table'
 
 
 class ExpensesList extends Component {
