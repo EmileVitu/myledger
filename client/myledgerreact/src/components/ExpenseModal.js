@@ -5,8 +5,9 @@ import PropTypes from 'prop-types'
 // Functions
 import { addExpense } from '../actions/expenseActions'
 // Styling
-import { Button } from '@material-ui/core'
+// import { Button } from '@material-ui/core'
 import {
+    Button,
     Modal, 
     ModalHeader,
     ModalBody, 

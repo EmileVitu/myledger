@@ -18,12 +18,17 @@ import {
     TableFooter} from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
-
+// Components
 import UpdateModal from './UpdateModal'
 import ExpenseModal from './ExpenseModal'
 
 
 class Expenses extends Component {
+
+    // state= {
+    //     openUpdate: false,
+    //     openExpense: false
+    // }
 
     static propTypes = {
         getExpenses: PropTypes.func.isRequired, 
@@ -39,12 +44,18 @@ class Expenses extends Component {
         this.props.deleteExpense(_id)
     }
 
-    openUpdateModal = () => {
-
+    toggleUpdateModal = () => {
+        // this.setState({
+        //     openUpdate: !this.state.openUpdate
+        // })
     }
 
     render() {
         const { expenses } = this.props.expense
+
+        // const options = { weekdat: 'long', year: 'numeric', month: 'long', day:'numeric' }
+        // toLocaleDateString --> for dateExpense
+        // toLocaleString --> for dateCreated
 
         return(
             <Container>
@@ -92,7 +103,7 @@ class Expenses extends Component {
                                                 variant='contained'
                                                 color='primary'
                                                 size='small'
-                                                onClick={this.openUpdateModal.bind(this)}
+                                                onClick={this.toggleUpdateModal}
                                             >
                                                 <EditIcon />
                                                 <UpdateModal parentId={_id}/>
