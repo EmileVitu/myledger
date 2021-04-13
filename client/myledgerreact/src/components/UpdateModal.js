@@ -57,15 +57,16 @@ class UpdateModal extends Component {
 
     render() {
         return(
+            
             <>
-                { this.props.isAuthenticated ?  
+
+                {/* { this.props.isAuthenticated ?  
                     <Button
                         color='info'
                         size='sm'
                         className='edit-btn'
                         onClick={this.toggle}
-                    >&raquo;</Button> : null }
-
+                    >&raquo;</Button> : null } */}
                 <Modal
                     isOpen={this.state.modal}
                     toggle={this.toggle}

@@ -8,8 +8,7 @@ import { getExpenses, deleteExpense } from '../actions/expenseActions'
 import { 
     Container, 
     Button, 
-    List, 
-    ListItem, 
+    ButtonGroup,
     Table,
     TableContainer, 
     TableRow,
@@ -18,9 +17,10 @@ import {
     TableBody,
     TableFooter} from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
+import EditIcon from '@material-ui/icons/Edit'
 
 import UpdateModal from './UpdateModal'
-import { ButtonGroup } from 'reactstrap'
+import ExpenseModal from './ExpenseModal'
 
 
 class Expenses extends Component {
@@ -39,29 +39,21 @@ class Expenses extends Component {
         this.props.deleteExpense(_id)
     }
 
+    openUpdateModal = () => {
+
+    }
+
     render() {
         const { expenses } = this.props.expense
 
         return(
             <Container>
-                <List>
-                    {expenses.map(({ _id, title, user, amount, category, dateExpense, comment, dateCreated }) => (
-                        <ListItem key={_id}>
-                            { this.props.isAuthenticated ? 
-                                <>
-                                    <Button 
-                                        variant='contained' 
-                                        color='secondary'
-                                        size='small'
-                                        onClick={this.onDeleteClick.bind(this, _id)}
-                                        ><DeleteIcon />Delete</Button>
-                                    <UpdateModal parentId={_id} />
-                                </> 
-                                : null }
-                            {_id} - {dateCreated} - {title} - {user} - {amount} - {dateExpense} - {category} - {comment}
-                        </ListItem>
-                    ))}
-                </List>
+            <ButtonGroup color='primary' variant='contained'>
+                <ExpenseModal />
+                <Button>Graph</Button>
+                <Button>Pie Chart</Button>
+                <Button>Another way to display</Button>
+            </ButtonGroup>
                 <TableContainer>
                     <Table>
                         <TableHead>
@@ -96,14 +88,22 @@ class Expenses extends Component {
                                                 size='small'
                                                 onClick={this.onDeleteClick.bind(this, _id)}
                                                 ><DeleteIcon /></Button>
-                                            <UpdateModal parentId={_id} />
+                                            <Button
+                                                variant='contained'
+                                                color='primary'
+                                                size='small'
+                                                onClick={this.openUpdateModal.bind(this)}
+                                            >
+                                                <EditIcon />
+                                                <UpdateModal parentId={_id}/>
+                                            </Button>
                                         </ButtonGroup>
                                     </TableCell>
                                 </TableRow>))}
                         </TableBody>
                         <TableFooter>
                             <TableRow>
-
+                                <TableCell>Hello Footer!</TableCell>
                             </TableRow>
                         </TableFooter>
                     </Table>
