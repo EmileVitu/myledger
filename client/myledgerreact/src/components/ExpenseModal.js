@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 // Functions
 import { addExpense } from '../actions/expenseActions'
 // Styling
-
+// import { Button } from '@material-ui/core'
 import {
     Button,
     Modal, 
@@ -64,7 +64,6 @@ class ExpenseModal extends Component {
                     <Button
                         variant='contained'
                         color='primary'
-                        style= {{marginBottom: '2rem'}}
                         onClick={this.toggle}
                     >Add Expense</Button> : 
                     <h4 className='mb-3 ml-4'>Please login or register to manage expenses</h4> }

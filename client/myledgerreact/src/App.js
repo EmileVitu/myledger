@@ -1,10 +1,11 @@
 // Dependencies
 import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import store from './store'
 // Components
 import LedgerNavBar from './components/LedgerNavBar'
-// import ExpensesList from './components/ExpensesList'
-import ExpenseModal from './components/ExpenseModal'
-import store from './store'
+import Expenses from './components/Expenses'
+import WelcomeLayout from './components/WelcomeLayout'
 //  Functions
 import { loadUser } from './actions/authActions'
 // Styling and UI
@@ -12,14 +13,14 @@ import './App.css'
 import { Container } from '@material-ui/core'
 
 
+
+
+
 // Will need to be removed
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Expenses from './components/Expenses'
 
 
-
-
-function App() {
+const App = (props) => {
 
   useEffect(() => {
     store.dispatch(loadUser())
@@ -29,45 +30,14 @@ function App() {
       <div className="App">
         <LedgerNavBar />
         <Container>
-          <ExpenseModal />
-          {/* <ExpensesList /> */}
-          <Expenses />
+          { props.isAuthenticated ? <Expenses /> : <WelcomeLayout /> }
         </Container>
       </div>
   );
 }
 
-export default App
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
 
-
-
-// Here is our previous class component rendering the same thing
-
-// class App extends Component {
-
-//   componentDidMount() {
-//     store.dispatch(loadUser())
-//   }
- 
-//   render() {
-//     return (
-//       <Provider store={store}>
-//         <div className="App">
-//           <LedgerNavBar />
-//           <Container>
-//             <ExpenseModal />
-//             {/* <ExpensesList /> */}
-//             <Expenses />
-//           </Container>
-//         </div>
-//       </Provider>
-//     );
-//   }
-// }
-
-// export default App
-
-
-
-
-
+export default connect(mapStateToProps, null)(App)
