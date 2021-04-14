@@ -49,9 +49,9 @@ class Expenses extends Component {
 
                 <ExpenseModal />
 
-                <Container>
+                <>
                     { this.props.isTableDisplayOpen ? <TableDisplay /> : null }
-                </Container>
+                </>
 
                 
 
