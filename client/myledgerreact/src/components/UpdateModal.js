@@ -1,4 +1,11 @@
+// Dependencies
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+// Functions
+import { updateExpense } from '../actions/expenseActions'
+import { closeUpdateModal } from '../actions/modalActions'
+// Styling
 import {
     Button,
     Modal,
@@ -7,23 +14,13 @@ import {
     Form,
     FormGroup,
     Label,
-    Input
-} from 'reactstrap'
-import { connect } from 'react-redux'
-import { updateExpense } from '../actions/expenseActions'
-import PropTypes from 'prop-types'
+    Input } from 'reactstrap'
+
 
 
 class UpdateModal extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            openUpdate: false
-        }
-    }
     
     state = {
-        modal: false,
         title: '',
         user: '',
         amount: '',
@@ -34,13 +31,8 @@ class UpdateModal extends Component {
 
     static propTypes = {
         isAuthenticated: PropTypes.bool,
-        expense: PropTypes.object.isRequired
-    }
-
-    toggle = () => {
-        this.setState({
-            modal: !this.state.modal
-        })
+        expense: PropTypes.object.isRequired,
+        isUpdateModalOpen: PropTypes.bool
     }
 
     onChange = (e) => {
@@ -59,29 +51,17 @@ class UpdateModal extends Component {
             comment: this.state.comment
         }
         this.props.updateExpense(updatedExpense)
-        this.toggle()
+        this.props.closeUpdateModal()
     }
 
     render() {
         return(
-
-            <>
-
-                { this.props.isAuthenticated ?
-                    <Button
-                        color='info'
-                        size='sm'
-                        className='edit-btn'
-                        onClick={this.toggle}
-                    >&raquo;</Button> : null }
                 <Modal
-                    isOpen={this.state.modal}
-                    toggle={this.toggle}
-                    // openUpdate={this.props.openUpdate}
+                    isOpen={this.props.isUpdateModalOpen}
+                    toggle={this.props.closeUpdateModal}
                 >
                     <ModalHeader
-                        // openUpdate={this.props.openUpdate}
-                        toggle={this.toggle}
+                        toggle={this.props.closeUpdateModal}
                         >Update this expense</ModalHeader>
                     <ModalBody>
                         <Form onSubmit={this.onSubmit}>
@@ -149,14 +129,14 @@ class UpdateModal extends Component {
                         </Form>
                     </ModalBody>
                 </Modal>
-            </>
         )
     }
 }
 
 const mapStateToProps = (state) => ({
     expense: state.expense,
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    isUpdateModalOpen: state.modal.isUpdateModalOpen
 })
 
-export default connect(mapStateToProps, { updateExpense })(UpdateModal)
+export default connect(mapStateToProps, { updateExpense, closeUpdateModal })(UpdateModal)

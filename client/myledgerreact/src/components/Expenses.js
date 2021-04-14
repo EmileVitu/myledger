@@ -4,6 +4,11 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 // Functions
 import { getExpenses, deleteExpense } from '../actions/expenseActions'
+import { 
+    openUpdateModal,
+    closeUpdateModal,
+    openExpenseModal,
+    closeExpenseModal } from '../actions/modalActions'
 // Styling
 import { 
     Container, 
@@ -25,15 +30,12 @@ import ExpenseModal from './ExpenseModal'
 
 class Expenses extends Component {
 
-    // state= {
-    //     openUpdate: false,
-    //     openExpense: false
-    // }
-
     static propTypes = {
         getExpenses: PropTypes.func.isRequired, 
         expense: PropTypes.object.isRequired,
-        isAuthenticated: PropTypes.bool
+        isAuthenticated: PropTypes.bool,
+        isUpdateModalOpen: PropTypes.bool,
+        isExpenseModalOpen: PropTypes.bool
     }
 
     componentDidMount() {
@@ -45,9 +47,11 @@ class Expenses extends Component {
     }
 
     toggleUpdateModal = () => {
-        // this.setState({
-        //     openUpdate: !this.state.openUpdate
-        // })
+        this.props.openUpdateModal()
+    }
+
+    toggleExpenseModal = () => {
+        this.props.openExpenseModal()
     }
 
     render() {
@@ -59,12 +63,16 @@ class Expenses extends Component {
 
         return(
             <Container>
-            <ButtonGroup color='primary' variant='contained'>
                 <ExpenseModal />
-                <Button>Graph</Button>
-                <Button>Pie Chart</Button>
-                <Button>Another way to display</Button>
-            </ButtonGroup>
+                <ButtonGroup color='primary' variant='contained'>
+                    <Button>Table</Button>
+                    <Button>Graph</Button>
+                    <Button>Pie Chart</Button>
+                    <Button>Another way to display</Button>
+                    <Button
+                        onClick={this.toggleExpenseModal}
+                    >Add expense</Button>
+                </ButtonGroup>
                 <TableContainer>
                     <Table>
                         <TableHead>
@@ -93,12 +101,6 @@ class Expenses extends Component {
                                     <TableCell>{dateCreated}</TableCell>
                                     <TableCell>
                                         <ButtonGroup>
-                                            <Button 
-                                                variant='contained' 
-                                                color='secondary'
-                                                size='small'
-                                                onClick={this.onDeleteClick.bind(this, _id)}
-                                                ><DeleteIcon /></Button>
                                             <Button
                                                 variant='contained'
                                                 color='primary'
@@ -108,6 +110,12 @@ class Expenses extends Component {
                                                 <EditIcon />
                                                 <UpdateModal parentId={_id}/>
                                             </Button>
+                                            <Button 
+                                                variant='contained' 
+                                                color='primary'
+                                                size='small'
+                                                onClick={this.onDeleteClick.bind(this, _id)}
+                                                ><DeleteIcon /></Button>
                                         </ButtonGroup>
                                     </TableCell>
                                 </TableRow>))}
@@ -127,7 +135,15 @@ class Expenses extends Component {
 
 const mapStateToProps = (state) => ({
     expense: state.expense,
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    isUpdateModalOpen: state.modal.isUpdateModalOpen,
+    isExpenseModalOpen: state.modal.isExpenseModalOpen
 })
 
-export default connect(mapStateToProps, { getExpenses, deleteExpense })(Expenses)
+export default connect(mapStateToProps, { 
+    getExpenses,
+    deleteExpense,
+    openUpdateModal,
+    closeUpdateModal,
+    openExpenseModal,
+    closeExpenseModal })(Expenses)
