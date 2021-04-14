@@ -2,8 +2,7 @@ import {
     OPEN_UPDATE_MODAL,
     CLOSE_UPDATE_MODAL,
     OPEN_EXPENSE_MODAL,
-    CLOSE_EXPENSE_MODAL
- } from './types'
+    CLOSE_EXPENSE_MODAL } from './types'
 
  // Update modal actions
  export const openUpdateModal = () => {
