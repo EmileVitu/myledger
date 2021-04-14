@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 // Functions
 import { getExpenses, deleteExpense } from '../../actions/expenseActions'
-import { 
-    openUpdateModal,
-    closeUpdateModal } from '../../actions/modalActions'
+import { openUpdateModal, closeUpdateModal } from '../../actions/modalActions'
 // Components
 import UpdateModal from '../UpdateModal'
 // Styling

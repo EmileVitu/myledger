@@ -42,18 +42,18 @@ class Expenses extends Component {
                     <Button>Graph</Button>
                     <Button>Pie Chart</Button>
                     <Button>Another way to display</Button>
-                    <Button
-                        onClick={this.toggleExpenseModal}
-                        >Add expense</Button>
+
                 </ButtonGroup>
+
+                <Button
+                    onClick={this.toggleExpenseModal}
+                    color='primary'
+                    variant='contained'
+                    >Add expense</Button>
 
                 <ExpenseModal />
 
-                <>
-                    { this.props.isTableDisplayOpen ? <TableDisplay /> : null }
-                </>
-
-                
+                { this.props.isTableDisplayOpen ? <TableDisplay /> : null }
 
             </Container>
         )
