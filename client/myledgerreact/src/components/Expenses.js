@@ -11,6 +11,7 @@ import {
     closeChartBarsDisplay } from '../actions/displayActions'
 // Components
 import ExpenseModal from './ExpenseModal'
+import WelcomeDisplay from './display/WelcomeDisplay'
 import TableDisplay from './display/TableDisplay'
 import ChartBarsDisplay from './display/ChartBarsDisplay'
 // Styling
@@ -35,10 +36,12 @@ class Expenses extends Component {
     }
 
     toggleTableDisplay = () => {
+        if(this.props.isChartBarsDisplayOpen) {this.props.closeChartBarsDisplay()}
         !this.props.isTableDisplayOpen ? this.props.openTableDisplay() : this.props.closeTableDisplay()
     }
 
     toggleChartBarsDisplay = () => {
+        if(this.props.isTableDisplayOpen) {this.props.closeTableDisplay()}
         !this.props.isChartBarsDisplayOpen ? this.props.openChartBarsDisplay() : this.props.closeChartBarsDisplay()
     }
 
@@ -71,7 +74,8 @@ class Expenses extends Component {
 
                 { this.props.isTableDisplayOpen ? <TableDisplay /> : null }
                 { this.props.isChartBarsDisplayOpen ? <ChartBarsDisplay /> : null }
-                
+                { !this.props.isTableDisplayOpen && !this.props.isChartBarsDisplayOpen ? <WelcomeDisplay /> : null }
+
             </Container>
         )
     }
