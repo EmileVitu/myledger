@@ -52,12 +52,12 @@ class Expenses extends Component {
                 <ButtonGroup color='primary' variant='contained'>
                     <Button
                         onClick={this.toggleTableDisplay}
-                        >Table</Button>
+                        >Table (icon)</Button>
                     <Button
                         onClick={this.toggleChartBarsDisplay}
-                        >Bars</Button>
-                    <Button>Pie Chart</Button>
-                    <Button>Another way to display</Button>
+                        >Bars (icon)</Button>
+                    <Button>(Pie Chart)</Button>
+                    <Button>(Another way to display)</Button>
                 </ButtonGroup>
 
                 <Button

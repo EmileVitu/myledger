@@ -69,3 +69,5 @@ app.listen(port, () => console.log(`Server started on port ${port}`))
 // react-transition-group --> removed because of conflict
 // @material-ui/core
 // @material-ui/icons
+// @nivo/core
+// @nivo/bar
