@@ -1,3 +1,4 @@
+// Dependencies
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -45,6 +46,7 @@ export class TableDisplay extends Component {
     render() {
         const { expenses } = this.props.expense
 
+        // Function for date formating
         // const options = { weekdat: 'long', year: 'numeric', month: 'long', day:'numeric' }
         // toLocaleDateString --> for dateExpense
         // toLocaleString --> for dateCreated

@@ -13,6 +13,7 @@ import {
     Container, 
     Button, 
     ButtonGroup } from '@material-ui/core'
+import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd'
 
 
 
@@ -42,14 +43,17 @@ class Expenses extends Component {
                     <Button>Graph</Button>
                     <Button>Pie Chart</Button>
                     <Button>Another way to display</Button>
-
                 </ButtonGroup>
 
                 <Button
                     onClick={this.toggleExpenseModal}
                     color='primary'
                     variant='contained'
-                    >Add expense</Button>
+                    className='float-right'
+                    startIcon={<PlaylistAddIcon />}
+                    >
+                    Add expense
+                </Button>
 
                 <ExpenseModal />
 
