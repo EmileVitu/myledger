@@ -4,10 +4,15 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 // Functions
 import { openExpenseModal, closeExpenseModal } from '../actions/modalActions'
-import { openTableDisplay, closeTableDisplay } from '../actions/displayActions'
+import { 
+    openTableDisplay, 
+    closeTableDisplay,
+    openChartBarsDisplay,
+    closeChartBarsDisplay } from '../actions/displayActions'
 // Components
 import ExpenseModal from './ExpenseModal'
 import TableDisplay from './display/TableDisplay'
+import ChartBarsDisplay from './display/ChartBarsDisplay'
 // Styling
 import { 
     Container, 
@@ -21,7 +26,8 @@ class Expenses extends Component {
 
     static propTypes = {
         isExpenseModalOpen: PropTypes.bool,
-        isTableDisplayOpen: PropTypes.bool
+        isTableDisplayOpen: PropTypes.bool,
+        isChartBarsDisplayOpen: PropTypes.bool
     }
 
     toggleExpenseModal = () => {
@@ -32,6 +38,10 @@ class Expenses extends Component {
         !this.props.isTableDisplayOpen ? this.props.openTableDisplay() : this.props.closeTableDisplay()
     }
 
+    toggleChartBarsDisplay = () => {
+        !this.props.isChartBarsDisplayOpen ? this.props.openChartBarsDisplay() : this.props.closeChartBarsDisplay()
+    }
+
     render() {
         return(
             <Container>
@@ -40,7 +50,9 @@ class Expenses extends Component {
                     <Button
                         onClick={this.toggleTableDisplay}
                         >Table</Button>
-                    <Button>Graph</Button>
+                    <Button
+                        onClick={this.toggleChartBarsDisplay}
+                        >Bars</Button>
                     <Button>Pie Chart</Button>
                     <Button>Another way to display</Button>
                 </ButtonGroup>
@@ -58,7 +70,8 @@ class Expenses extends Component {
                 <ExpenseModal />
 
                 { this.props.isTableDisplayOpen ? <TableDisplay /> : null }
-
+                { this.props.isChartBarsDisplayOpen ? <ChartBarsDisplay /> : null }
+                
             </Container>
         )
     }
@@ -67,11 +80,14 @@ class Expenses extends Component {
 
 const mapStateToProps = (state) => ({
     isExpenseModalOpen: state.modal.isExpenseModalOpen,
-    isTableDisplayOpen: state.display.isTableDisplayOpen
+    isTableDisplayOpen: state.display.isTableDisplayOpen,
+    isChartBarsDisplayOpen: state.display.isChartBarsDisplayOpen
 })
 
 export default connect(mapStateToProps, { 
     openExpenseModal, 
     closeExpenseModal,
     openTableDisplay,
-    closeTableDisplay })(Expenses)
+    closeTableDisplay,
+    openChartBarsDisplay,
+    closeChartBarsDisplay })(Expenses)
