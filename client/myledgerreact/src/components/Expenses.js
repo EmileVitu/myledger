@@ -7,7 +7,7 @@ import { openExpenseModal, closeExpenseModal } from '../actions/modalActions'
 import { openTableDisplay, closeTableDisplay } from '../actions/displayActions'
 // Components
 import ExpenseModal from './ExpenseModal'
-import TableDisplay from './table/TableDisplay'
+import TableDisplay from './display/TableDisplay'
 // Styling
 import { 
     Container, 
