@@ -1,6 +1,11 @@
 // Dependencies
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import { ResponsiveBar } from '@nivo/bar'
+// Functions
+import { getExpenses } from '../../actions/expenseActions'
+
 
 
 export class ChartBarsDisplay extends Component {
@@ -115,15 +120,50 @@ export class ChartBarsDisplay extends Component {
           ]
     }
 
+    static propTypes = {
+        getExpenses: PropTypes.func.isRequired,
+        expense: PropTypes.object.isRequired
+    }
+
+    componentDidMount() {
+        this.props.getExpenses()
+    }
+
     render() {
-        const { data } = this.state
+
+        const { expenses } = this.props.expense
+
+        const data =  [
+            {
+                "Month": "AD",
+                "Needs": 99,
+                "hot dogColor": "hsl(22, 70%, 50%)",
+                "Wants": 96,
+                "burgerColor": "hsl(335, 70%, 50%)",
+                "Culture": 64,
+                "sandwichColor": "hsl(143, 70%, 50%)",
+                "Unexpected": 72,
+                "kebabColor": "hsl(27, 70%, 50%)"
+              },
+              {
+                "Month": "AE",
+                "Needs": 100,
+                "hot dogColor": "hsl(157, 70%, 50%)",
+                "Wants": 176,
+                "burgerColor": "hsl(199, 70%, 50%)",
+                "Culture": 140,
+                "sandwichColor": "hsl(147, 70%, 50%)",
+                "Unexpected": 120,
+                "kebabColor": "hsl(100, 70%, 50%)"
+              }
+        ]
 
         return (
-            <div style={{height:600}}>
+            <div style={{height:700}}>
                 <ResponsiveBar
-                    data={data}
-                    keys={[ 'hot dog', 'burger', 'sandwich', 'kebab', 'fries', 'donut' ]}
-                    indexBy="country"
+                    data={ data }
+                    keys={[ 'Unexpected', 'Culture', 'Wants', 'Needs' ]}
+                    indexBy="Month"
                     margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
                     padding={0.3}
                     valueScale={{ type: 'linear' }}
@@ -152,13 +192,13 @@ export class ChartBarsDisplay extends Component {
                     fill={[
                         {
                             match: {
-                                id: 'fries'
+                                id: 'Needs'
                             },
                             id: 'dots'
                         },
                         {
                             match: {
-                                id: 'sandwich'
+                                id: 'Culture'
                             },
                             id: 'lines'
                         }
@@ -170,7 +210,7 @@ export class ChartBarsDisplay extends Component {
                         tickSize: 5,
                         tickPadding: 5,
                         tickRotation: 0,
-                        legend: 'country',
+                        legend: 'Month',
                         legendPosition: 'middle',
                         legendOffset: 32
                     }}
@@ -178,7 +218,7 @@ export class ChartBarsDisplay extends Component {
                         tickSize: 5,
                         tickPadding: 5,
                         tickRotation: 0,
-                        legend: 'food',
+                        legend: 'Amount',
                         legendPosition: 'middle',
                         legendOffset: -40
                     }}
@@ -218,4 +258,8 @@ export class ChartBarsDisplay extends Component {
     }
 }
 
-export default ChartBarsDisplay
+const mapStateToProps = (state) => ({
+    expense: state.expense
+})
+
+export default connect(mapStateToProps, { getExpenses })(ChartBarsDisplay)

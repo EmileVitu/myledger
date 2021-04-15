@@ -86,7 +86,7 @@ class ExpenseModal extends Component {
 
                             <Label for='expense'>Amount</Label>
                             <Input
-                                type='text'
+                                type='decimal'
                                 name='amount' 
                                 id='expense' 
                                 placeholder='Add the amount' 
@@ -95,7 +95,7 @@ class ExpenseModal extends Component {
 
                             <Label for='expense'>Date of the expense</Label>
                             <Input
-                                type='text' 
+                                type='date' 
                                 name='dateExpense' 
                                 id='expense' 
                                 placeholder='Add a date for your expense' 
