@@ -16,6 +16,7 @@ import ExpenseModal from './ExpenseModal'
 import WelcomeDisplay from './display/WelcomeDisplay'
 import TableDisplay from './display/TableDisplay'
 import ChartBarsDisplay from './display/ChartBarsDisplay'
+import ChartPieDisplay from './display/ChartPieDisplay'
 // Styling
 import { 
     Container, 
@@ -40,16 +41,20 @@ class Expenses extends Component {
 
     toggleTableDisplay = () => {
         if(this.props.isChartBarsDisplayOpen) {this.props.closeChartBarsDisplay()}
+        if(this.props.isChartPieDisplayOpen) {this.props.closeChartPieDisplay()}
         !this.props.isTableDisplayOpen ? this.props.openTableDisplay() : this.props.closeTableDisplay()
     }
 
     toggleChartBarsDisplay = () => {
         if(this.props.isTableDisplayOpen) {this.props.closeTableDisplay()}
+        if(this.props.isChartPieDisplayOpen) {this.props.closeChartPieDisplay()}
         !this.props.isChartBarsDisplayOpen ? this.props.openChartBarsDisplay() : this.props.closeChartBarsDisplay()
     }
 
     toggleChartPieDisplay = () => {
-        console.log('Hello!')
+        if(this.props.isTableDisplayOpen) {this.props.closeTableDisplay()}
+        if(this.props.isChartBarsDisplayOpen) {this.props.closeChartBarsDisplay()}
+        !this.props.isChartPieDisplayOpen ? this.props.openChartPieDisplay() : this.props.closeChartPieDisplay()
     }
 
     render() {
@@ -59,13 +64,13 @@ class Expenses extends Component {
                 <ButtonGroup color='primary' variant='contained'>
                     <Button
                         onClick={this.toggleTableDisplay}
-                        >Table (icon)</Button>
+                        >Table (icon!)</Button>
                     <Button
                         onClick={this.toggleChartBarsDisplay}
-                        >Bars (icon)</Button>
+                        >Bars (icon!)</Button>
                     <Button
                         onClick={this.toggleChartPieDisplay}
-                        >Pie Chart (icon)</Button>
+                        >Pie Chart (icon!)</Button>
                     <Button>(Another way to display)</Button>
                 </ButtonGroup>
 
@@ -83,7 +88,10 @@ class Expenses extends Component {
 
                 { this.props.isTableDisplayOpen ? <TableDisplay /> : null }
                 { this.props.isChartBarsDisplayOpen ? <ChartBarsDisplay /> : null }
-                { !this.props.isTableDisplayOpen && !this.props.isChartBarsDisplayOpen ? <WelcomeDisplay /> : null }
+                { this.props.isChartPieDisplayOpen ? <ChartPieDisplay /> : null }
+                { !this.props.isTableDisplayOpen && 
+                    !this.props.isChartBarsDisplayOpen &&
+                    !this.props.isChartPieDisplayOpen ? <WelcomeDisplay /> : null }
 
             </Container>
         )
