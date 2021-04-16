@@ -8,7 +8,9 @@ import {
     openTableDisplay, 
     closeTableDisplay,
     openChartBarsDisplay,
-    closeChartBarsDisplay } from '../actions/displayActions'
+    closeChartBarsDisplay,
+    openChartPieDisplay,
+    closeChartPieDisplay } from '../actions/displayActions'
 // Components
 import ExpenseModal from './ExpenseModal'
 import WelcomeDisplay from './display/WelcomeDisplay'
@@ -28,7 +30,8 @@ class Expenses extends Component {
     static propTypes = {
         isExpenseModalOpen: PropTypes.bool,
         isTableDisplayOpen: PropTypes.bool,
-        isChartBarsDisplayOpen: PropTypes.bool
+        isChartBarsDisplayOpen: PropTypes.bool,
+        isChartPieDisplayOpen: PropTypes.bool
     }
 
     toggleExpenseModal = () => {
@@ -45,6 +48,10 @@ class Expenses extends Component {
         !this.props.isChartBarsDisplayOpen ? this.props.openChartBarsDisplay() : this.props.closeChartBarsDisplay()
     }
 
+    toggleChartPieDisplay = () => {
+        console.log('Hello!')
+    }
+
     render() {
         return(
             <Container>
@@ -56,7 +63,9 @@ class Expenses extends Component {
                     <Button
                         onClick={this.toggleChartBarsDisplay}
                         >Bars (icon)</Button>
-                    <Button>(Pie Chart)</Button>
+                    <Button
+                        onClick={this.toggleChartPieDisplay}
+                        >Pie Chart (icon)</Button>
                     <Button>(Another way to display)</Button>
                 </ButtonGroup>
 
@@ -85,7 +94,8 @@ class Expenses extends Component {
 const mapStateToProps = (state) => ({
     isExpenseModalOpen: state.modal.isExpenseModalOpen,
     isTableDisplayOpen: state.display.isTableDisplayOpen,
-    isChartBarsDisplayOpen: state.display.isChartBarsDisplayOpen
+    isChartBarsDisplayOpen: state.display.isChartBarsDisplayOpen,
+    isChartPieDisplayOpen: state.display.isChartPieDisplayOpen
 })
 
 export default connect(mapStateToProps, { 
@@ -94,4 +104,6 @@ export default connect(mapStateToProps, {
     openTableDisplay,
     closeTableDisplay,
     openChartBarsDisplay,
-    closeChartBarsDisplay })(Expenses)
+    closeChartBarsDisplay,
+    openChartPieDisplay,
+    closeChartPieDisplay })(Expenses)
