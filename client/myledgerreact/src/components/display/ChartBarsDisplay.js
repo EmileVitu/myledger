@@ -2,10 +2,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { ResponsiveBar } from '@nivo/bar'
 // Functions
 import { getExpenses } from '../../actions/expenseActions'
-
+// Styling
+import { ResponsiveBar } from '@nivo/bar'
 
 
 export class ChartBarsDisplay extends Component {
@@ -21,7 +21,7 @@ export class ChartBarsDisplay extends Component {
 
     render() {
 
-        const { expenses } = this.props.expense
+        // const { expenses } = this.props.expense
 
         // const expenseData = expenses.map(({ _id, title, user, amount, category, dateExpense, comment, dateCreated }) => [
         //     {

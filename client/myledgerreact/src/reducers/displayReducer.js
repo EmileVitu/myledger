@@ -2,11 +2,14 @@ import {
     OPEN_TABLE_DISPLAY,
     CLOSE_TABLE_DISPLAY,
     OPEN_CHARTBARS_DISPLAY,
-    CLOSE_CHARTBARS_DISPLAY } from '../actions/types'
+    CLOSE_CHARTBARS_DISPLAY, 
+    OPEN_CHARTPIE_DISPLAY,
+    CLOSE_CHARTPIE_DISPLAY } from '../actions/types'
 
 const initialState = {
     isTableDisplayOpen: false,
-    isChartBarsDisplayOpen: false
+    isChartBarsDisplayOpen: false,
+    isChartPieDisplayOpen: false
 }
 
 export const displayReducer = (state = initialState, action) => {
@@ -30,6 +33,16 @@ export const displayReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isChartBarsDisplayOpen: false
+            }
+        case OPEN_CHARTPIE_DISPLAY:
+            return {
+                ...state,
+                isChartPieDisplayOpen: true
+            }
+        case CLOSE_CHARTPIE_DISPLAY:
+            return {
+                ...state,
+                isChartPieDisplayOpen: false
             }
         default:
             return state

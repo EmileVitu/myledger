@@ -8,12 +8,15 @@ import {
     openTableDisplay, 
     closeTableDisplay,
     openChartBarsDisplay,
-    closeChartBarsDisplay } from '../actions/displayActions'
+    closeChartBarsDisplay,
+    openChartPieDisplay,
+    closeChartPieDisplay } from '../actions/displayActions'
 // Components
 import ExpenseModal from './ExpenseModal'
 import WelcomeDisplay from './display/WelcomeDisplay'
 import TableDisplay from './display/TableDisplay'
 import ChartBarsDisplay from './display/ChartBarsDisplay'
+import ChartPieDisplay from './display/ChartPieDisplay'
 // Styling
 import { 
     Container, 
@@ -28,7 +31,8 @@ class Expenses extends Component {
     static propTypes = {
         isExpenseModalOpen: PropTypes.bool,
         isTableDisplayOpen: PropTypes.bool,
-        isChartBarsDisplayOpen: PropTypes.bool
+        isChartBarsDisplayOpen: PropTypes.bool,
+        isChartPieDisplayOpen: PropTypes.bool
     }
 
     toggleExpenseModal = () => {
@@ -37,12 +41,20 @@ class Expenses extends Component {
 
     toggleTableDisplay = () => {
         if(this.props.isChartBarsDisplayOpen) {this.props.closeChartBarsDisplay()}
+        if(this.props.isChartPieDisplayOpen) {this.props.closeChartPieDisplay()}
         !this.props.isTableDisplayOpen ? this.props.openTableDisplay() : this.props.closeTableDisplay()
     }
 
     toggleChartBarsDisplay = () => {
         if(this.props.isTableDisplayOpen) {this.props.closeTableDisplay()}
+        if(this.props.isChartPieDisplayOpen) {this.props.closeChartPieDisplay()}
         !this.props.isChartBarsDisplayOpen ? this.props.openChartBarsDisplay() : this.props.closeChartBarsDisplay()
+    }
+
+    toggleChartPieDisplay = () => {
+        if(this.props.isTableDisplayOpen) {this.props.closeTableDisplay()}
+        if(this.props.isChartBarsDisplayOpen) {this.props.closeChartBarsDisplay()}
+        !this.props.isChartPieDisplayOpen ? this.props.openChartPieDisplay() : this.props.closeChartPieDisplay()
     }
 
     render() {
@@ -52,11 +64,13 @@ class Expenses extends Component {
                 <ButtonGroup color='primary' variant='contained'>
                     <Button
                         onClick={this.toggleTableDisplay}
-                        >Table (icon)</Button>
+                        >Table (icon!)</Button>
                     <Button
                         onClick={this.toggleChartBarsDisplay}
-                        >Bars (icon)</Button>
-                    <Button>(Pie Chart)</Button>
+                        >Bars (icon!)</Button>
+                    <Button
+                        onClick={this.toggleChartPieDisplay}
+                        >Pie Chart (icon!)</Button>
                     <Button>(Another way to display)</Button>
                 </ButtonGroup>
 
@@ -74,7 +88,10 @@ class Expenses extends Component {
 
                 { this.props.isTableDisplayOpen ? <TableDisplay /> : null }
                 { this.props.isChartBarsDisplayOpen ? <ChartBarsDisplay /> : null }
-                { !this.props.isTableDisplayOpen && !this.props.isChartBarsDisplayOpen ? <WelcomeDisplay /> : null }
+                { this.props.isChartPieDisplayOpen ? <ChartPieDisplay /> : null }
+                { !this.props.isTableDisplayOpen && 
+                    !this.props.isChartBarsDisplayOpen &&
+                    !this.props.isChartPieDisplayOpen ? <WelcomeDisplay /> : null }
 
             </Container>
         )
@@ -85,7 +102,8 @@ class Expenses extends Component {
 const mapStateToProps = (state) => ({
     isExpenseModalOpen: state.modal.isExpenseModalOpen,
     isTableDisplayOpen: state.display.isTableDisplayOpen,
-    isChartBarsDisplayOpen: state.display.isChartBarsDisplayOpen
+    isChartBarsDisplayOpen: state.display.isChartBarsDisplayOpen,
+    isChartPieDisplayOpen: state.display.isChartPieDisplayOpen
 })
 
 export default connect(mapStateToProps, { 
@@ -94,4 +112,6 @@ export default connect(mapStateToProps, {
     openTableDisplay,
     closeTableDisplay,
     openChartBarsDisplay,
-    closeChartBarsDisplay })(Expenses)
+    closeChartBarsDisplay,
+    openChartPieDisplay,
+    closeChartPieDisplay })(Expenses)
