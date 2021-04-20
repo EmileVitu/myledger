@@ -18,11 +18,14 @@ export class ChartPieDisplay extends Component {
 
     componentDidMount() {
         this.props.getExpenses()
+        this.forceUpdate()
+        console.log('hi')
     }
 
     render() {
 
         const { expenses } = this.props.expense
+        
 
         const categoryFilterNeeds = expenses.filter(expense => expense.category === 'Needs')
         const categoryFilterNeedsSum = categoryFilterNeeds.reduce((n, { amount }) => n + amount, 0)
@@ -35,8 +38,6 @@ export class ChartPieDisplay extends Component {
 
         const categoryFilterUnexpected = expenses.filter(expense => expense.category === 'Unexpected')
         const categoryFilterUnexpectedSum = categoryFilterUnexpected.reduce((n, { amount }) => n + amount, 0)
-
-        console.log(categoryFilterUnexpectedSum)
 
         // const result = expenses.reduce((r, { dateExpense, amount, category }) => {
         //     const dateObject = new Date(dateExpense)
@@ -62,162 +63,142 @@ export class ChartPieDisplay extends Component {
             {
               "id": "Needs",
               "label": " Needs",
-              "value": { categoryFilterNeedsSum },
+              "value": categoryFilterNeedsSum,
               "color": "hsl(29, 70%, 50%)"
             },
             {
               "id": "Wants",
               "label": "Wants",
-              "value": { categoryFilterWantsSum },
+              "value": categoryFilterWantsSum,
               "color": "hsl(97, 70%, 50%)"
             },
             {
               "id": "Culture",
               "label": "Culture",
-              "value": { categoryFilterCultureSum },
+              "value": categoryFilterCultureSum,
               "color": "hsl(212, 70%, 50%)"
             },
             {
               "id": "Unexpected",
               "label": "Unexpected",
-              "value": { categoryFilterUnexpectedSum },
+              "value": categoryFilterUnexpectedSum,
               "color": "hsl(173, 70%, 50%)"
             }
           ]
 
         return (
-            <>
-                { this.componentDidMount ? <div style={{height:500}}>
-                    <ResponsivePie
-                        data={data}
-                        margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-                        innerRadius={0.5}
-                        padAngle={0.7}
-                        cornerRadius={3}
-                        colors={{ scheme: 'nivo' }}
-                        borderWidth={1}
-                        borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
-                        radialLabelsSkipAngle={10}
-                        radialLabelsTextColor="#333333"
-                        radialLabelsLinkColor={{ from: 'color' }}
-                        sliceLabelsSkipAngle={10}
-                        sliceLabelsTextColor="#333333"
-                        defs={[
-                            {
-                                id: 'dots',
-                                type: 'patternDots',
-                                background: 'inherit',
-                                color: 'rgba(255, 255, 255, 0.3)',
-                                size: 4,
-                                padding: 1,
-                                stagger: true
+            <div style={{height:500}}>
+                <ResponsivePie
+                    data={data}
+                    margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+                    innerRadius={0.5}
+                    padAngle={0.7}
+                    cornerRadius={3}
+                    colors={{ scheme: 'nivo' }}
+                    borderWidth={1}
+                    borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
+                    radialLabelsSkipAngle={10}
+                    radialLabelsTextColor="#333333"
+                    radialLabelsLinkColor={{ from: 'color' }}
+                    sliceLabelsSkipAngle={10}
+                    sliceLabelsTextColor="#333333"
+                    defs={[
+                        {
+                            id: 'dots',
+                            type: 'patternDots',
+                            background: 'inherit',
+                            color: 'rgba(255, 255, 255, 0.3)',
+                            size: 4,
+                            padding: 1,
+                            stagger: true
+                        },
+                        {
+                            id: 'lines',
+                            type: 'patternLines',
+                            background: 'inherit',
+                            color: 'rgba(255, 255, 255, 0.3)',
+                            rotation: -45,
+                            lineWidth: 6,
+                            spacing: 10
+                        }
+                    ]}
+                    fill={[
+                        {
+                            match: {
+                                id: 'ruby'
                             },
-                            {
-                                id: 'lines',
-                                type: 'patternLines',
-                                background: 'inherit',
-                                color: 'rgba(255, 255, 255, 0.3)',
-                                rotation: -45,
-                                lineWidth: 6,
-                                spacing: 10
-                            }
-                        ]}
-                        fill={[
-                            {
-                                match: {
-                                    id: 'ruby'
-                                },
-                                id: 'dots'
+                            id: 'dots'
+                        },
+                        {
+                            match: {
+                                id: 'c'
                             },
-                            {
-                                match: {
-                                    id: 'c'
-                                },
-                                id: 'dots'
+                            id: 'dots'
+                        },
+                        {
+                            match: {
+                                id: 'go'
                             },
-                            {
-                                match: {
-                                    id: 'go'
-                                },
-                                id: 'dots'
+                            id: 'dots'
+                        },
+                        {
+                            match: {
+                                id: 'python'
                             },
-                            {
-                                match: {
-                                    id: 'python'
-                                },
-                                id: 'dots'
+                            id: 'dots'
+                        },
+                        {
+                            match: {
+                                id: 'scala'
                             },
-                            {
-                                match: {
-                                    id: 'scala'
-                                },
-                                id: 'lines'
+                            id: 'lines'
+                        },
+                        {
+                            match: {
+                                id: 'lisp'
                             },
-                            {
-                                match: {
-                                    id: 'lisp'
-                                },
-                                id: 'lines'
+                            id: 'lines'
+                        },
+                        {
+                            match: {
+                                id: 'elixir'
                             },
-                            {
-                                match: {
-                                    id: 'elixir'
-                                },
-                                id: 'lines'
+                            id: 'lines'
+                        },
+                        {
+                            match: {
+                                id: 'javascript'
                             },
-                            {
-                                match: {
-                                    id: 'javascript'
-                                },
-                                id: 'lines'
-                            }
-                        ]}
-                        legends={[
-                            {
-                                anchor: 'bottom',
-                                direction: 'row',
-                                justify: false,
-                                translateX: 0,
-                                translateY: 56,
-                                itemsSpacing: 0,
-                                itemWidth: 100,
-                                itemHeight: 18,
-                                itemTextColor: '#999',
-                                itemDirection: 'left-to-right',
-                                itemOpacity: 1,
-                                symbolSize: 18,
-                                symbolShape: 'circle',
-                                effects: [
-                                    {
-                                        on: 'hover',
-                                        style: {
-                                            itemTextColor: '#000'
-                                        }
+                            id: 'lines'
+                        }
+                    ]}
+                    legends={[
+                        {
+                            anchor: 'bottom',
+                            direction: 'row',
+                            justify: false,
+                            translateX: 0,
+                            translateY: 56,
+                            itemsSpacing: 0,
+                            itemWidth: 100,
+                            itemHeight: 18,
+                            itemTextColor: '#999',
+                            itemDirection: 'left-to-right',
+                            itemOpacity: 1,
+                            symbolSize: 18,
+                            symbolShape: 'circle',
+                            effects: [
+                                {
+                                    on: 'hover',
+                                    style: {
+                                        itemTextColor: '#000'
                                     }
-                                ]
-                            }
-                        ]}
-                    />
-                </div> : null }
-                <div>
-                    <p>Needs : {categoryFilterNeedsSum}</p>
-                    {categoryFilterNeeds.map(({ _id, category, amount, dateExpense }) => (
-                        <li key={_id}>{category} - {amount} - {dateExpense}</li>
-                    ))}
-                    <p>Wants : {categoryFilterWantsSum}</p>
-                    {categoryFilterWants.map(({ _id, category, amount, dateExpense }) => (
-                        <li key={_id}>{category} - {amount} - {dateExpense}</li>
-                    ))}
-                    <p>Culture : {categoryFilterCultureSum}</p>
-                    {categoryFilterCulture.map(({ _id, category, amount, dateExpense }) => (
-                        <li key={_id}>{category} - {amount} - {dateExpense}</li>
-                    ))}
-                    <p>Unexpected : {categoryFilterUnexpectedSum}</p>
-                    {categoryFilterUnexpected.map(({ _id, category, amount, dateExpense }) => (
-                        <li key={_id}>{category} - {amount} - {dateExpense}</li>
-                    ))}
-                </div>
-            </>
+                                }
+                            ]
+                        }
+                    ]}
+                />
+            </div>
         )
     }
 }
