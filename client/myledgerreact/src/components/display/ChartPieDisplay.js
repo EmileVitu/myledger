@@ -20,25 +20,21 @@ export class ChartPieDisplay extends Component {
         this.props.getExpenses()
     }
 
-    sumOfAllExpenses = () => {
-        
-    }
-
     render() {
 
         const { expenses } = this.props.expense
 
         const categoryFilterNeeds = expenses.filter(expense => expense.category === 'Needs')
-        console.log(categoryFilterNeeds)
+        const categoryFilterNeedsSum = categoryFilterNeeds.reduce((n, { amount }) => n + amount, 0)
 
         const categoryFilterWants = expenses.filter(expense => expense.category === 'Wants')
-        console.log(categoryFilterWants)
+        const categoryFilterWantsSum = categoryFilterWants.reduce((n, { amount }) => n + amount, 0)
 
         const categoryFilterCulture = expenses.filter(expense => expense.category === 'Culture')
-        console.log(categoryFilterCulture)
+        const categoryFilterCultureSum = categoryFilterCulture.reduce((n, { amount }) => n + amount, 0)
 
         const categoryFilterUnexpected = expenses.filter(expense => expense.category === 'Unexpected')
-        console.log(categoryFilterUnexpected)
+        const categoryFilterUnexpectedSum = categoryFilterUnexpected.reduce((n, { amount }) => n + amount, 0)
 
 
         // const result = expenses.reduce((r, { dateExpense, amount, category }) => {
@@ -63,15 +59,15 @@ export class ChartPieDisplay extends Component {
 
         const data = [
             {
-              "id": "css",
-              "label": "css",
-              "value": 270,
+              "id": "Needs",
+              "label": " Needs",
+              "value": { categoryFilterNeedsSum },
               "color": "hsl(29, 70%, 50%)"
             },
             {
-              "id": "python",
-              "label": "python",
-              "value": 266,
+              "id": "Wants",
+              "label": "Wants",
+              "value": { categoryFilterWantsSum },
               "color": "hsl(97, 70%, 50%)"
             },
             {
@@ -209,19 +205,19 @@ export class ChartPieDisplay extends Component {
                     />
                 </div>
                 <div>
-                    <p>Needs</p>
+                    <p>Needs : {categoryFilterNeedsSum}</p>
                     {categoryFilterNeeds.map(({ _id, category, amount, dateExpense }) => (
                         <li key={_id}>{category} - {amount} - {dateExpense}</li>
                     ))}
-                    <p>Wants</p>
+                    <p>Wants : {categoryFilterWantsSum}</p>
                     {categoryFilterWants.map(({ _id, category, amount, dateExpense }) => (
                         <li key={_id}>{category} - {amount} - {dateExpense}</li>
                     ))}
-                    <p>Culture</p>
+                    <p>Culture : {categoryFilterCultureSum}</p>
                     {categoryFilterCulture.map(({ _id, category, amount, dateExpense }) => (
                         <li key={_id}>{category} - {amount} - {dateExpense}</li>
                     ))}
-                    <p>Unexpected</p>
+                    <p>Unexpected : {categoryFilterUnexpectedSum}</p>
                     {categoryFilterUnexpected.map(({ _id, category, amount, dateExpense }) => (
                         <li key={_id}>{category} - {amount} - {dateExpense}</li>
                     ))}
