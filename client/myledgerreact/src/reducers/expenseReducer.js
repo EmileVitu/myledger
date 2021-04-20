@@ -7,7 +7,8 @@ import {
 
 
 const initialState = {
-    expenses: []
+    expenses: [],
+    loading: false
 }
 
 export const expenseReducer = (state = initialState, action) => {

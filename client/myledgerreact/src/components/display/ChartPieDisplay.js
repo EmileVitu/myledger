@@ -36,6 +36,7 @@ export class ChartPieDisplay extends Component {
         const categoryFilterUnexpected = expenses.filter(expense => expense.category === 'Unexpected')
         const categoryFilterUnexpectedSum = categoryFilterUnexpected.reduce((n, { amount }) => n + amount, 0)
 
+        console.log(categoryFilterUnexpectedSum)
 
         // const result = expenses.reduce((r, { dateExpense, amount, category }) => {
         //     const dateObject = new Date(dateExpense)
@@ -71,28 +72,22 @@ export class ChartPieDisplay extends Component {
               "color": "hsl(97, 70%, 50%)"
             },
             {
-              "id": "rust",
-              "label": "rust",
-              "value": 188,
+              "id": "Culture",
+              "label": "Culture",
+              "value": { categoryFilterCultureSum },
               "color": "hsl(212, 70%, 50%)"
             },
             {
-              "id": "c",
-              "label": "c",
-              "value": 130,
+              "id": "Unexpected",
+              "label": "Unexpected",
+              "value": { categoryFilterUnexpectedSum },
               "color": "hsl(173, 70%, 50%)"
-            },
-            {
-              "id": "make",
-              "label": "make",
-              "value": 29,
-              "color": "hsl(298, 70%, 50%)"
             }
           ]
 
         return (
             <>
-                <div style={{height:500}}>
+                { this.componentDidMount ? <div style={{height:500}}>
                     <ResponsivePie
                         data={data}
                         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
@@ -203,7 +198,7 @@ export class ChartPieDisplay extends Component {
                             }
                         ]}
                     />
-                </div>
+                </div> : null }
                 <div>
                     <p>Needs : {categoryFilterNeedsSum}</p>
                     {categoryFilterNeeds.map(({ _id, category, amount, dateExpense }) => (
