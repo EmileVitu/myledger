@@ -21,155 +21,187 @@ export class ChartPieDisplay extends Component {
     }
 
     render() {
+        // Pulling out the data
+        const { expenses } = this.props.expense
+        
+        // Filtering per category (specific to the pieChart)
+        const categoryFilterNeeds = expenses.filter(expense => expense.category === 'Needs')
+        const categoryFilterNeedsSum = categoryFilterNeeds.reduce((n, { amount }) => n + amount, 0)
 
-        // const { expenses } = this.props.expense
+        const categoryFilterWants = expenses.filter(expense => expense.category === 'Wants')
+        const categoryFilterWantsSum = categoryFilterWants.reduce((n, { amount }) => n + amount, 0)
+
+        const categoryFilterCulture = expenses.filter(expense => expense.category === 'Culture')
+        const categoryFilterCultureSum = categoryFilterCulture.reduce((n, { amount }) => n + amount, 0)
+
+        const categoryFilterUnexpected = expenses.filter(expense => expense.category === 'Unexpected')
+        const categoryFilterUnexpectedSum = categoryFilterUnexpected.reduce((n, { amount }) => n + amount, 0)
+
+
+        // Filtering by date
+
+        // const result = expenses.reduce((r, { dateExpense, amount, category }) => {
+        //     const dateObject = new Date(dateExpense)
+        //     const total = expenses.amount*1
+        //     const monthyear = dateObject.toLocaleString('en-us', { month: 'long', year: 'numeric' })
+        //     if(!r[monthyear]){ r[monthyear] = { monthyear, entries: 1 , expense: {expenses}}}
+        //     else r[monthyear].entries++
+        //     return r
+        // }, [])
+
+        // console.log(Object.values(result))
+        // console.log(result.total)
+        // console.log(expenses.amount)
+
+
+        // First filter category --> gives the global selector
+        // Then filter years --> gives the years selector
+        // Then filter the months --> gives the months and years selector
+
+        // --> !!!!! each must return a different array to display in our pie
 
         const data = [
             {
-              "id": "css",
-              "label": "css",
-              "value": 270,
+              "id": "Needs",
+              "label": " Needs",
+              "value": categoryFilterNeedsSum,
               "color": "hsl(29, 70%, 50%)"
             },
             {
-              "id": "python",
-              "label": "python",
-              "value": 266,
+              "id": "Wants",
+              "label": "Wants",
+              "value": categoryFilterWantsSum,
               "color": "hsl(97, 70%, 50%)"
             },
             {
-              "id": "rust",
-              "label": "rust",
-              "value": 188,
+              "id": "Culture",
+              "label": "Culture",
+              "value": categoryFilterCultureSum,
               "color": "hsl(212, 70%, 50%)"
             },
             {
-              "id": "c",
-              "label": "c",
-              "value": 130,
+              "id": "Unexpected",
+              "label": "Unexpected",
+              "value": categoryFilterUnexpectedSum,
               "color": "hsl(173, 70%, 50%)"
-            },
-            {
-              "id": "make",
-              "label": "make",
-              "value": 29,
-              "color": "hsl(298, 70%, 50%)"
             }
           ]
 
         return (
-            <div style={{height:500}}>
-                <ResponsivePie
-                    data={data}
-                    margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-                    innerRadius={0.5}
-                    padAngle={0.7}
-                    cornerRadius={3}
-                    colors={{ scheme: 'nivo' }}
-                    borderWidth={1}
-                    borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
-                    radialLabelsSkipAngle={10}
-                    radialLabelsTextColor="#333333"
-                    radialLabelsLinkColor={{ from: 'color' }}
-                    sliceLabelsSkipAngle={10}
-                    sliceLabelsTextColor="#333333"
-                    defs={[
-                        {
-                            id: 'dots',
-                            type: 'patternDots',
-                            background: 'inherit',
-                            color: 'rgba(255, 255, 255, 0.3)',
-                            size: 4,
-                            padding: 1,
-                            stagger: true
-                        },
-                        {
-                            id: 'lines',
-                            type: 'patternLines',
-                            background: 'inherit',
-                            color: 'rgba(255, 255, 255, 0.3)',
-                            rotation: -45,
-                            lineWidth: 6,
-                            spacing: 10
-                        }
-                    ]}
-                    fill={[
-                        {
-                            match: {
-                                id: 'ruby'
+            <>
+                { this.componentDidMount ? <div style={{height:500}}>
+                    <ResponsivePie
+                        data={data}
+                        margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+                        innerRadius={0.5}
+                        padAngle={0.7}
+                        cornerRadius={3}
+                        colors={{ scheme: 'nivo' }}
+                        borderWidth={1}
+                        borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
+                        radialLabelsSkipAngle={10}
+                        radialLabelsTextColor="#333333"
+                        radialLabelsLinkColor={{ from: 'color' }}
+                        sliceLabelsSkipAngle={10}
+                        sliceLabelsTextColor="#333333"
+                        defs={[
+                            {
+                                id: 'dots',
+                                type: 'patternDots',
+                                background: 'inherit',
+                                color: 'rgba(255, 255, 255, 0.3)',
+                                size: 4,
+                                padding: 1,
+                                stagger: true
                             },
-                            id: 'dots'
-                        },
-                        {
-                            match: {
-                                id: 'c'
+                            {
+                                id: 'lines',
+                                type: 'patternLines',
+                                background: 'inherit',
+                                color: 'rgba(255, 255, 255, 0.3)',
+                                rotation: -45,
+                                lineWidth: 6,
+                                spacing: 10
+                            }
+                        ]}
+                        fill={[
+                            {
+                                match: {
+                                    id: 'ruby'
+                                },
+                                id: 'dots'
                             },
-                            id: 'dots'
-                        },
-                        {
-                            match: {
-                                id: 'go'
+                            {
+                                match: {
+                                    id: 'c'
+                                },
+                                id: 'dots'
                             },
-                            id: 'dots'
-                        },
-                        {
-                            match: {
-                                id: 'python'
+                            {
+                                match: {
+                                    id: 'go'
+                                },
+                                id: 'dots'
                             },
-                            id: 'dots'
-                        },
-                        {
-                            match: {
-                                id: 'scala'
+                            {
+                                match: {
+                                    id: 'python'
+                                },
+                                id: 'dots'
                             },
-                            id: 'lines'
-                        },
-                        {
-                            match: {
-                                id: 'lisp'
+                            {
+                                match: {
+                                    id: 'scala'
+                                },
+                                id: 'lines'
                             },
-                            id: 'lines'
-                        },
-                        {
-                            match: {
-                                id: 'elixir'
+                            {
+                                match: {
+                                    id: 'lisp'
+                                },
+                                id: 'lines'
                             },
-                            id: 'lines'
-                        },
-                        {
-                            match: {
-                                id: 'javascript'
+                            {
+                                match: {
+                                    id: 'elixir'
+                                },
+                                id: 'lines'
                             },
-                            id: 'lines'
-                        }
-                    ]}
-                    legends={[
-                        {
-                            anchor: 'bottom',
-                            direction: 'row',
-                            justify: false,
-                            translateX: 0,
-                            translateY: 56,
-                            itemsSpacing: 0,
-                            itemWidth: 100,
-                            itemHeight: 18,
-                            itemTextColor: '#999',
-                            itemDirection: 'left-to-right',
-                            itemOpacity: 1,
-                            symbolSize: 18,
-                            symbolShape: 'circle',
-                            effects: [
-                                {
-                                    on: 'hover',
-                                    style: {
-                                        itemTextColor: '#000'
+                            {
+                                match: {
+                                    id: 'javascript'
+                                },
+                                id: 'lines'
+                            }
+                        ]}
+                        legends={[
+                            {
+                                anchor: 'bottom',
+                                direction: 'row',
+                                justify: false,
+                                translateX: 0,
+                                translateY: 56,
+                                itemsSpacing: 0,
+                                itemWidth: 100,
+                                itemHeight: 18,
+                                itemTextColor: '#999',
+                                itemDirection: 'left-to-right',
+                                itemOpacity: 1,
+                                symbolSize: 18,
+                                symbolShape: 'circle',
+                                effects: [
+                                    {
+                                        on: 'hover',
+                                        style: {
+                                            itemTextColor: '#000'
+                                        }
                                     }
-                                }
-                            ]
-                        }
-                    ]}
-                />
-            </div>
+                                ]
+                            }
+                        ]}
+                    />
+                </div> : null }
+            </>
         )
     }
 }
