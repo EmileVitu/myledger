@@ -18,15 +18,13 @@ export class ChartPieDisplay extends Component {
 
     componentDidMount() {
         this.props.getExpenses()
-        this.forceUpdate()
-        console.log('hi')
     }
 
     render() {
-
+        // Pulling out the data
         const { expenses } = this.props.expense
         
-
+        // Filtering per category (specific to the pieChart)
         const categoryFilterNeeds = expenses.filter(expense => expense.category === 'Needs')
         const categoryFilterNeedsSum = categoryFilterNeeds.reduce((n, { amount }) => n + amount, 0)
 
@@ -38,6 +36,9 @@ export class ChartPieDisplay extends Component {
 
         const categoryFilterUnexpected = expenses.filter(expense => expense.category === 'Unexpected')
         const categoryFilterUnexpectedSum = categoryFilterUnexpected.reduce((n, { amount }) => n + amount, 0)
+
+
+        // Filtering by date
 
         // const result = expenses.reduce((r, { dateExpense, amount, category }) => {
         //     const dateObject = new Date(dateExpense)
@@ -87,118 +88,120 @@ export class ChartPieDisplay extends Component {
           ]
 
         return (
-            <div style={{height:500}}>
-                <ResponsivePie
-                    data={data}
-                    margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-                    innerRadius={0.5}
-                    padAngle={0.7}
-                    cornerRadius={3}
-                    colors={{ scheme: 'nivo' }}
-                    borderWidth={1}
-                    borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
-                    radialLabelsSkipAngle={10}
-                    radialLabelsTextColor="#333333"
-                    radialLabelsLinkColor={{ from: 'color' }}
-                    sliceLabelsSkipAngle={10}
-                    sliceLabelsTextColor="#333333"
-                    defs={[
-                        {
-                            id: 'dots',
-                            type: 'patternDots',
-                            background: 'inherit',
-                            color: 'rgba(255, 255, 255, 0.3)',
-                            size: 4,
-                            padding: 1,
-                            stagger: true
-                        },
-                        {
-                            id: 'lines',
-                            type: 'patternLines',
-                            background: 'inherit',
-                            color: 'rgba(255, 255, 255, 0.3)',
-                            rotation: -45,
-                            lineWidth: 6,
-                            spacing: 10
-                        }
-                    ]}
-                    fill={[
-                        {
-                            match: {
-                                id: 'ruby'
+            <>
+                { this.componentDidMount ? <div style={{height:500}}>
+                    <ResponsivePie
+                        data={data}
+                        margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+                        innerRadius={0.5}
+                        padAngle={0.7}
+                        cornerRadius={3}
+                        colors={{ scheme: 'nivo' }}
+                        borderWidth={1}
+                        borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
+                        radialLabelsSkipAngle={10}
+                        radialLabelsTextColor="#333333"
+                        radialLabelsLinkColor={{ from: 'color' }}
+                        sliceLabelsSkipAngle={10}
+                        sliceLabelsTextColor="#333333"
+                        defs={[
+                            {
+                                id: 'dots',
+                                type: 'patternDots',
+                                background: 'inherit',
+                                color: 'rgba(255, 255, 255, 0.3)',
+                                size: 4,
+                                padding: 1,
+                                stagger: true
                             },
-                            id: 'dots'
-                        },
-                        {
-                            match: {
-                                id: 'c'
+                            {
+                                id: 'lines',
+                                type: 'patternLines',
+                                background: 'inherit',
+                                color: 'rgba(255, 255, 255, 0.3)',
+                                rotation: -45,
+                                lineWidth: 6,
+                                spacing: 10
+                            }
+                        ]}
+                        fill={[
+                            {
+                                match: {
+                                    id: 'ruby'
+                                },
+                                id: 'dots'
                             },
-                            id: 'dots'
-                        },
-                        {
-                            match: {
-                                id: 'go'
+                            {
+                                match: {
+                                    id: 'c'
+                                },
+                                id: 'dots'
                             },
-                            id: 'dots'
-                        },
-                        {
-                            match: {
-                                id: 'python'
+                            {
+                                match: {
+                                    id: 'go'
+                                },
+                                id: 'dots'
                             },
-                            id: 'dots'
-                        },
-                        {
-                            match: {
-                                id: 'scala'
+                            {
+                                match: {
+                                    id: 'python'
+                                },
+                                id: 'dots'
                             },
-                            id: 'lines'
-                        },
-                        {
-                            match: {
-                                id: 'lisp'
+                            {
+                                match: {
+                                    id: 'scala'
+                                },
+                                id: 'lines'
                             },
-                            id: 'lines'
-                        },
-                        {
-                            match: {
-                                id: 'elixir'
+                            {
+                                match: {
+                                    id: 'lisp'
+                                },
+                                id: 'lines'
                             },
-                            id: 'lines'
-                        },
-                        {
-                            match: {
-                                id: 'javascript'
+                            {
+                                match: {
+                                    id: 'elixir'
+                                },
+                                id: 'lines'
                             },
-                            id: 'lines'
-                        }
-                    ]}
-                    legends={[
-                        {
-                            anchor: 'bottom',
-                            direction: 'row',
-                            justify: false,
-                            translateX: 0,
-                            translateY: 56,
-                            itemsSpacing: 0,
-                            itemWidth: 100,
-                            itemHeight: 18,
-                            itemTextColor: '#999',
-                            itemDirection: 'left-to-right',
-                            itemOpacity: 1,
-                            symbolSize: 18,
-                            symbolShape: 'circle',
-                            effects: [
-                                {
-                                    on: 'hover',
-                                    style: {
-                                        itemTextColor: '#000'
+                            {
+                                match: {
+                                    id: 'javascript'
+                                },
+                                id: 'lines'
+                            }
+                        ]}
+                        legends={[
+                            {
+                                anchor: 'bottom',
+                                direction: 'row',
+                                justify: false,
+                                translateX: 0,
+                                translateY: 56,
+                                itemsSpacing: 0,
+                                itemWidth: 100,
+                                itemHeight: 18,
+                                itemTextColor: '#999',
+                                itemDirection: 'left-to-right',
+                                itemOpacity: 1,
+                                symbolSize: 18,
+                                symbolShape: 'circle',
+                                effects: [
+                                    {
+                                        on: 'hover',
+                                        style: {
+                                            itemTextColor: '#000'
+                                        }
                                     }
-                                }
-                            ]
-                        }
-                    ]}
-                />
-            </div>
+                                ]
+                            }
+                        ]}
+                    />
+                </div> : null }
+            </>
         )
     }
 }
