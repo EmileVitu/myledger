@@ -21,6 +21,7 @@ export class ChartPieDisplay extends Component {
     }
 
     render() {
+        
         // Pulling out the data
         const { expenses } = this.props.expense
         
@@ -36,7 +37,6 @@ export class ChartPieDisplay extends Component {
 
         const categoryFilterUnexpected = expenses.filter(expense => expense.category === 'Unexpected')
         const categoryFilterUnexpectedSum = categoryFilterUnexpected.reduce((n, { amount }) => n + amount, 0)
-
 
         // Filtering by date
 

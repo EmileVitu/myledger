@@ -8,6 +8,7 @@ import { getExpenses } from '../../actions/expenseActions'
 import { ResponsiveBar } from '@nivo/bar'
 
 
+
 export class ChartBarsDisplay extends Component {
 
     static propTypes = {
@@ -21,29 +22,57 @@ export class ChartBarsDisplay extends Component {
 
     render() {
 
-        // const { expenses } = this.props.expense
+        // Pulling out the data
+        const { expenses } = this.props.expense
 
-        // const expenseData = expenses.map(({ _id, title, user, amount, category, dateExpense, comment, dateCreated }) => [
-        //     {
-        //         "Month": "dddde"
-        //     }
-        // ])
+        const filteredData = expenses.reduce((r, { dateExpense, amount, category }) => {
+            const dateObject = new Date(dateExpense)
+            const monthyear = dateObject.toLocaleString('en-us', { month: 'long', year: 'numeric' })
+            if(!r[monthyear]){
+                 r[monthyear] = { 
+                    dateSorted: monthyear,
+                    entries: 1,
+                    expenses: [{
+                            category,
+                            amount
+                        }],
+                    needsTotal: 0,
+                    wantsTotal: 0,
+                    cultureTotal: 0,
+                    unexpectedTotal: 0
+                    }
+                }
+            else {
+                r[monthyear].entries++
+                r[monthyear].expenses.push({
+                    category,
+                    amount
+                })
+                const categoryFilterNeeds = r[monthyear].expenses.filter(expense => expense.category === 'Needs')
+                r[monthyear].needsTotal = categoryFilterNeeds.reduce((n, { amount }) => n + amount, 0)
+                const categoryFilterWants = r[monthyear].expenses.filter(expense => expense.category === 'Wants')
+                r[monthyear].wantsTotal = categoryFilterWants.reduce((n, { amount }) => n + amount, 0)
+                const categoryFilterCulture = r[monthyear].expenses.filter(expense => expense.category === 'Culture')
+                r[monthyear].cultureTotal = categoryFilterCulture.reduce((n, { amount }) => n + amount, 0)
+                const categoryFilterUnexpected = r[monthyear].expenses.filter(expense => expense.category === 'Unexpected')
+                r[monthyear].unexpectedTotal = categoryFilterUnexpected.reduce((n, { amount }) => n + amount, 0)
+            }
+            return r
+        }, [])
 
-        // Will need to : 
-        // --> First, sort by date
-        // --> Then, group by date (second sorting between two dates)
-        // --> Then, create new objects with the sum of the amounts of the objects after these two sorting, and their categories
+        // console.log(result)
+        console.log(filteredData)
 
         const data = [
             {
-                "Month": "AD",
-                "Needs": 99,
+                "Month": 'Blah',
+                "Needs": 200,
                 "hot dogColor": "hsl(22, 70%, 50%)",
-                "Wants": 96,
+                "Wants": 400,
                 "burgerColor": "hsl(335, 70%, 50%)",
-                "Culture": 64,
+                "Culture": 200,
                 "sandwichColor": "hsl(143, 70%, 50%)",
-                "Unexpected": 72,
+                "Unexpected": 300,
                 "kebabColor": "hsl(27, 70%, 50%)"
               },
               {
@@ -58,6 +87,42 @@ export class ChartBarsDisplay extends Component {
                 "kebabColor": "hsl(100, 70%, 50%)"
               }
         ]
+
+
+
+        const data2 = filteredData.reduce((r, { monthyear, dateSorted, needsTotal, wantsTotal, cultureTotal, unexpectedTotal } ) => {
+            const preparedData = []
+            if(!r[preparedData]){
+                r[preparedData] = { 
+                    "Month": monthyear.dateSorted,
+                    "Needs": needsTotal,
+                    "hot dogColor": "hsl(22, 70%, 50%)",
+                    "Wants": wantsTotal,
+                    "burgerColor": "hsl(335, 70%, 50%)",
+                    "Culture": cultureTotal,
+                    "sandwichColor": "hsl(143, 70%, 50%)",
+                    "Unexpected": unexpectedTotal,
+                    "kebabColor": "hsl(27, 70%, 50%)"
+                    }
+                }
+            else {
+                r[preparedData].push({ 
+                    "Month": dateSorted,
+                    "Needs": needsTotal,
+                    "hot dogColor": "hsl(22, 70%, 50%)",
+                    "Wants": wantsTotal,
+                    "burgerColor": "hsl(335, 70%, 50%)",
+                    "Culture": cultureTotal,
+                    "sandwichColor": "hsl(143, 70%, 50%)",
+                    "Unexpected": unexpectedTotal,
+                    "kebabColor": "hsl(27, 70%, 50%)"
+                    })
+            }
+            return r
+        },[])
+
+        console.log(data)
+        console.log(data2)
 
         return (
             <div style={{height:700}}>
