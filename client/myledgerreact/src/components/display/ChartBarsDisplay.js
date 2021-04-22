@@ -25,44 +25,7 @@ export class ChartBarsDisplay extends Component {
         // Pulling out the data
         const { expenses } = this.props.expense
 
-        // const filteredData = expenses.reduce((r, { dateExpense, amount, category }) => {
-        //     const dateObject = new Date(dateExpense)
-        //     const monthyear = dateObject.toLocaleString('en-us', { month: 'long', year: 'numeric' })
-        //     if(!r[monthyear]){
-        //          r[monthyear] = { 
-        //             dateSorted: monthyear,
-        //             entries: 1,
-        //             expenses: [{
-        //                     category,
-        //                     amount
-        //                 }],
-        //             needsTotal: 0,
-        //             wantsTotal: 0,
-        //             cultureTotal: 0,
-        //             unexpectedTotal: 0
-        //             }
-        //         }
-        //     else {
-        //         r[monthyear].entries++
-        //         r[monthyear].expenses.push({
-        //             category,
-        //             amount
-        //         })
-        //         const categoryFilterNeeds = r[monthyear].expenses.filter(expense => expense.category === 'Needs')
-        //         r[monthyear].needsTotal = categoryFilterNeeds.reduce((n, { amount }) => n + amount, 0)
-        //         const categoryFilterWants = r[monthyear].expenses.filter(expense => expense.category === 'Wants')
-        //         r[monthyear].wantsTotal = categoryFilterWants.reduce((n, { amount }) => n + amount, 0)
-        //         const categoryFilterCulture = r[monthyear].expenses.filter(expense => expense.category === 'Culture')
-        //         r[monthyear].cultureTotal = categoryFilterCulture.reduce((n, { amount }) => n + amount, 0)
-        //         const categoryFilterUnexpected = r[monthyear].expenses.filter(expense => expense.category === 'Unexpected')
-        //         r[monthyear].unexpectedTotal = categoryFilterUnexpected.reduce((n, { amount }) => n + amount, 0)
-        //     }
-        //     return r
-        // }, [])
-
-        // console.log(filteredData)
-
-
+        // Map array by dates with category and amount from the expenses array
         const filterTwo = expenses.map(({ dateExpense, amount, category }) => {
             const dateObject = new Date(dateExpense)
             const newDate = dateObject.toLocaleString('en-us', { month: 'long', year: 'numeric' })
@@ -75,28 +38,14 @@ export class ChartBarsDisplay extends Component {
         console.log(filterTwo)
         console.log(filterTwo[0])
 
-        const filterThree = filterTwo.reduce((n, d) => {
-            const found = n.find(a => a.date === d.date)
-            const expense = { date: d.date, amount: d.amount, category: d.category }
-            if (found) {
-              found.expenses.push(expense)
-            }
-            else {
-              n.push({ date: d.date, expenses: [{ amount: d.amount, category: d.category }] })
-            }
-            return n
-          }, [])
 
-        console.log(filterThree)
-        console.log(filterThree[0])
-
+        // Sorts by date in an array, containing expenses, an array of expenses at this date
         const filterFour = filterTwo.reduce((n, d) => {
             const found = n.find(a => a.date === d.date)
             const expense = {date: d.date, amount: d.amount, category: d.category }
             if (found) {
                 found.expenses.push(expense)
-            }
-            else {
+            } else {
                 n.push({
                     date: d.date,
                     expenses: [{ 
@@ -107,21 +56,43 @@ export class ChartBarsDisplay extends Component {
                     cultureTotal: 0,
                     unexpectedTotal: 0
                     })
-                // const categoryFilterNeeds = d.date.expenses.filter(expense => expense.category === 'Needs')
-                // n.date.needsTotal = categoryFilterNeeds.reduce((n, { amount }) => n + amount, 0)
-                // const categoryFilterWants = r[monthyear].expenses.filter(expense => expense.category === 'Wants')
-                // r[monthyear].wantsTotal = categoryFilterWants.reduce((n, { amount }) => n + amount, 0)
-                // const categoryFilterCulture = r[monthyear].expenses.filter(expense => expense.category === 'Culture')
-                // r[monthyear].cultureTotal = categoryFilterCulture.reduce((n, { amount }) => n + amount, 0)
-                // const categoryFilterUnexpected = r[monthyear].expenses.filter(expense => expense.category === 'Unexpected')
-                // r[monthyear].unexpectedTotal = categoryFilterUnexpected.reduce((n, { amount }) => n + amount, 0)
             }
             return n
         }, [])
-
         console.log(filterFour)
         console.log(filterFour[0])
         
+        // Filter each expense of each date and sums them by category
+        const filterFive = filterFour.map(n => {
+            const categoryFilterNeeds = n.expenses.filter(expense => expense.category === 'Needs')
+            n.needsTotal = categoryFilterNeeds.reduce((n, { amount }) => n + amount, 0)
+            const categoryFilterWants = n.expenses.filter(expense => expense.category === 'Wants')
+            n.wantsTotal = categoryFilterWants.reduce((n, { amount }) => n + amount, 0)
+            const categoryFilterCulture = n.expenses.filter(expense => expense.category === 'Culture')
+            n.cultureTotal = categoryFilterCulture.reduce((n, { amount }) => n + amount, 0)
+            const categoryFilterUnexpected = n.expenses.filter(expense => expense.category === 'Unexpected')
+            n.cultureUnexpected = categoryFilterUnexpected.reduce((n, { amount }) => n + amount, 0)
+            return n
+        })
+        console.log(filterFive)
+        console.log(filterFive[0])
+
+
+        const data2 = filterFive.map(n => {
+            return {
+                "Month": n.date,
+                "Needs": n.needsTotal,
+                "hot dogColor": "hsl(22, 70%, 50%)",
+                "Wants": n.wantsTotal,
+                "burgerColor": "hsl(335, 70%, 50%)",
+                "Culture": n.cultureTotal,
+                "sandwichColor": "hsl(143, 70%, 50%)",
+                "Unexpected": n.unexpectedTotal,
+                "kebabColor": "hsl(27, 70%, 50%)"
+            }
+        })
+
+        console.log(data2)
 
         const data = [
             {
@@ -151,7 +122,7 @@ export class ChartBarsDisplay extends Component {
         return (
             <div style={{height:700}}>
                 <ResponsiveBar
-                    data={ data }
+                    data={ data2 }
                     keys={[ 'Unexpected', 'Culture', 'Wants', 'Needs' ]}
                     indexBy="Month"
                     margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
