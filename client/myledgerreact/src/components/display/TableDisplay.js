@@ -44,40 +44,48 @@ export class TableDisplay extends Component {
     }
 
     render() {
+
+        // Pulling out the expenses
         const { expenses } = this.props.expense
 
-        // Function for date formating
-        // const options = { weekdat: 'long', year: 'numeric', month: 'long', day:'numeric' }
-        // toLocaleDateString --> for dateExpense
-        // toLocaleString --> for dateCreated
+        // Remapping the array with a correct date format
+        const refilteredExpenses = expenses.map(({ _id, title, user, amount, category, dateExpense, comment }) => {
+            const dateObject = new Date(dateExpense)
+            const newDate = dateObject.toLocaleString('en-us', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })
+            return {
+                _id,
+                title,
+                user,
+                amount,
+                category,
+                dateExpense: newDate,
+                comment
+            }
+        })
 
         return (
             <TableContainer>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Id</TableCell>
                             <TableCell>Expense</TableCell>
                             <TableCell>User</TableCell>
                             <TableCell>Amount</TableCell>
                             <TableCell>Category</TableCell>
                             <TableCell>Date</TableCell>
                             <TableCell>Comment</TableCell>
-                            <TableCell>Added on</TableCell>
                             <TableCell>Edit</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {expenses.map(({ _id, title, user, amount, category, dateExpense, comment, dateCreated }) => (
+                        {refilteredExpenses.map(({ _id, title, user, amount, category, dateExpense, comment }) => (
                             <TableRow key={_id}>
-                                <TableCell>{_id}</TableCell>
                                 <TableCell>{title}</TableCell>
                                 <TableCell>{user}</TableCell>
                                 <TableCell>{amount}</TableCell>
                                 <TableCell>{category}</TableCell>
                                 <TableCell>{dateExpense}</TableCell>
                                 <TableCell>{comment}</TableCell>
-                                <TableCell>{dateCreated}</TableCell>
                                 <TableCell>
                                     <ButtonGroup>
                                         <Button

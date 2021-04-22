@@ -23,8 +23,9 @@ import {
     Button, 
     ButtonGroup } from '@material-ui/core'
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd'
-
-
+import TableChartOutlinedIcon from '@material-ui/icons/TableChartOutlined'
+import AssessmentOutlinedIcon from '@material-ui/icons/AssessmentOutlined'
+import PieChartOutlinedIcon from '@material-ui/icons/PieChartOutlined'
 
 class Expenses extends Component {
 
@@ -64,13 +65,13 @@ class Expenses extends Component {
                 <ButtonGroup color='primary' variant='contained'>
                     <Button
                         onClick={this.toggleTableDisplay}
-                        >Table (icon!)</Button>
+                        ><TableChartOutlinedIcon /></Button>
                     <Button
                         onClick={this.toggleChartBarsDisplay}
-                        >Bars (icon!)</Button>
+                        ><AssessmentOutlinedIcon /></Button>
                     <Button
                         onClick={this.toggleChartPieDisplay}
-                        >Pie Chart (icon!)</Button>
+                        ><PieChartOutlinedIcon /></Button>
                     <Button>(Another way to display)</Button>
                 </ButtonGroup>
 
