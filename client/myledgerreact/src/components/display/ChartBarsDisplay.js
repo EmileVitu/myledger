@@ -8,6 +8,7 @@ import { getExpenses } from '../../actions/expenseActions'
 import { ResponsiveBar } from '@nivo/bar'
 
 
+
 export class ChartBarsDisplay extends Component {
 
     static propTypes = {
@@ -21,46 +22,72 @@ export class ChartBarsDisplay extends Component {
 
     render() {
 
-        // const { expenses } = this.props.expense
+        // Pulling out the data from the redux state
+        const { expenses } = this.props.expense
 
-        // const expenseData = expenses.map(({ _id, title, user, amount, category, dateExpense, comment, dateCreated }) => [
-        //     {
-        //         "Month": "dddde"
-        //     }
-        // ])
+        // Map array by dates with category and amount from the expenses array
+        const filterOne = expenses.map(({ dateExpense, amount, category }) => {
+            const dateObject = new Date(dateExpense)
+            const newDate = dateObject.toLocaleString('en-us', { month: 'long', year: 'numeric' })
+            return {
+                date: newDate,
+                amount,
+                category
+            }
+        })
 
-        // Will need to : 
-        // --> First, sort by date
-        // --> Then, group by date (second sorting between two dates)
-        // --> Then, create new objects with the sum of the amounts of the objects after these two sorting, and their categories
+        // Sorts by date in an array, containing expenses, an array of expenses at this date
+        const filterTwo = filterOne.reduce((n, d) => {
+            const found = n.find(a => a.date === d.date)
+            const expense = {date: d.date, amount: d.amount, category: d.category }
+            if (found) {
+                found.expenses.push(expense)
+            } else {
+                n.push({
+                    date: d.date,
+                    expenses: [{ 
+                        amount: d.amount,
+                        category: d.category }],
+                    needsTotal: 0,
+                    wantsTotal: 0,
+                    cultureTotal: 0,
+                    unexpectedTotal: 0
+                    })
+            }
+            return n
+        }, [])
+        
+        // Filter each expense of each date and sums them by category
+        const filterThree = filterTwo.map(n => {
+            const categoryFilterNeeds = n.expenses.filter(expense => expense.category === 'Needs')
+            n.needsTotal = categoryFilterNeeds.reduce((n, { amount }) => n + amount, 0)
+            const categoryFilterWants = n.expenses.filter(expense => expense.category === 'Wants')
+            n.wantsTotal = categoryFilterWants.reduce((n, { amount }) => n + amount, 0)
+            const categoryFilterCulture = n.expenses.filter(expense => expense.category === 'Culture')
+            n.cultureTotal = categoryFilterCulture.reduce((n, { amount }) => n + amount, 0)
+            const categoryFilterUnexpected = n.expenses.filter(expense => expense.category === 'Unexpected')
+            n.cultureUnexpected = categoryFilterUnexpected.reduce((n, { amount }) => n + amount, 0)
+            return n
+        })
 
-        const data = [
-            {
-                "Month": "AD",
-                "Needs": 99,
+        // Finally we can map our array in the data array for the barChart
+        const data = filterThree.map(n => {
+            return {
+                "Month": n.date,
+                "Needs": n.needsTotal,
                 "hot dogColor": "hsl(22, 70%, 50%)",
-                "Wants": 96,
+                "Wants": n.wantsTotal,
                 "burgerColor": "hsl(335, 70%, 50%)",
-                "Culture": 64,
+                "Culture": n.cultureTotal,
                 "sandwichColor": "hsl(143, 70%, 50%)",
-                "Unexpected": 72,
+                "Unexpected": n.unexpectedTotal,
                 "kebabColor": "hsl(27, 70%, 50%)"
-              },
-              {
-                "Month": "AE",
-                "Needs": 100,
-                "hot dogColor": "hsl(157, 70%, 50%)",
-                "Wants": 176,
-                "burgerColor": "hsl(199, 70%, 50%)",
-                "Culture": 140,
-                "sandwichColor": "hsl(147, 70%, 50%)",
-                "Unexpected": 120,
-                "kebabColor": "hsl(100, 70%, 50%)"
-              }
-        ]
-
+            }
+        })
+        console.log(data)
+        
         return (
-            <div style={{height:700}}>
+            <div style={{height:500}}>
                 <ResponsiveBar
                     data={ data }
                     keys={[ 'Unexpected', 'Culture', 'Wants', 'Needs' ]}
