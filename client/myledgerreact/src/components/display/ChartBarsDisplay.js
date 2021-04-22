@@ -22,11 +22,11 @@ export class ChartBarsDisplay extends Component {
 
     render() {
 
-        // Pulling out the data
+        // Pulling out the data from the redux state
         const { expenses } = this.props.expense
 
         // Map array by dates with category and amount from the expenses array
-        const filterTwo = expenses.map(({ dateExpense, amount, category }) => {
+        const filterOne = expenses.map(({ dateExpense, amount, category }) => {
             const dateObject = new Date(dateExpense)
             const newDate = dateObject.toLocaleString('en-us', { month: 'long', year: 'numeric' })
             return {
@@ -35,12 +35,9 @@ export class ChartBarsDisplay extends Component {
                 category
             }
         })
-        console.log(filterTwo)
-        console.log(filterTwo[0])
-
 
         // Sorts by date in an array, containing expenses, an array of expenses at this date
-        const filterFour = filterTwo.reduce((n, d) => {
+        const filterTwo = filterOne.reduce((n, d) => {
             const found = n.find(a => a.date === d.date)
             const expense = {date: d.date, amount: d.amount, category: d.category }
             if (found) {
@@ -59,11 +56,9 @@ export class ChartBarsDisplay extends Component {
             }
             return n
         }, [])
-        console.log(filterFour)
-        console.log(filterFour[0])
         
         // Filter each expense of each date and sums them by category
-        const filterFive = filterFour.map(n => {
+        const filterThree = filterTwo.map(n => {
             const categoryFilterNeeds = n.expenses.filter(expense => expense.category === 'Needs')
             n.needsTotal = categoryFilterNeeds.reduce((n, { amount }) => n + amount, 0)
             const categoryFilterWants = n.expenses.filter(expense => expense.category === 'Wants')
@@ -74,11 +69,9 @@ export class ChartBarsDisplay extends Component {
             n.cultureUnexpected = categoryFilterUnexpected.reduce((n, { amount }) => n + amount, 0)
             return n
         })
-        console.log(filterFive)
-        console.log(filterFive[0])
 
-
-        const data2 = filterFive.map(n => {
+        // Finally we can map our array in the data array for the barChart
+        const data = filterThree.map(n => {
             return {
                 "Month": n.date,
                 "Needs": n.needsTotal,
@@ -91,38 +84,12 @@ export class ChartBarsDisplay extends Component {
                 "kebabColor": "hsl(27, 70%, 50%)"
             }
         })
-
-        console.log(data2)
-
-        const data = [
-            {
-                "Month": 'Blah',
-                "Needs": 200,
-                "hot dogColor": "hsl(22, 70%, 50%)",
-                "Wants": 400,
-                "burgerColor": "hsl(335, 70%, 50%)",
-                "Culture": 200,
-                "sandwichColor": "hsl(143, 70%, 50%)",
-                "Unexpected": 300,
-                "kebabColor": "hsl(27, 70%, 50%)"
-              },
-              {
-                "Month": "AE",
-                "Needs": 100,
-                "hot dogColor": "hsl(157, 70%, 50%)",
-                "Wants": 176,
-                "burgerColor": "hsl(199, 70%, 50%)",
-                "Culture": 140,
-                "sandwichColor": "hsl(147, 70%, 50%)",
-                "Unexpected": 120,
-                "kebabColor": "hsl(100, 70%, 50%)"
-              }
-        ]
+        console.log(data)
         
         return (
-            <div style={{height:700}}>
+            <div style={{height:500}}>
                 <ResponsiveBar
-                    data={ data2 }
+                    data={ data }
                     keys={[ 'Unexpected', 'Culture', 'Wants', 'Needs' ]}
                     indexBy="Month"
                     margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
