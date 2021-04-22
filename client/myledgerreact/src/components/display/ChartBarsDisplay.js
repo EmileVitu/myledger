@@ -84,7 +84,6 @@ export class ChartBarsDisplay extends Component {
                 "kebabColor": "hsl(27, 70%, 50%)"
             }
         })
-        console.log(data)
         
         return (
             <div style={{height:500}}>

@@ -17,9 +17,13 @@ import {
     TableHead,
     TableCell,
     TableBody,
-    TableFooter} from '@material-ui/core'
+    TableFooter } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
+import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined'
+import LocalBarIcon from '@material-ui/icons/LocalBar'
+import MuseumIcon from '@material-ui/icons/Museum'
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline'
 
 
 
@@ -68,6 +72,7 @@ export class TableDisplay extends Component {
                 <Table>
                     <TableHead>
                         <TableRow>
+                            <TableCell></TableCell>
                             <TableCell>Expense</TableCell>
                             <TableCell>User</TableCell>
                             <TableCell>Amount</TableCell>
@@ -80,6 +85,12 @@ export class TableDisplay extends Component {
                     <TableBody>
                         {refilteredExpenses.map(({ _id, title, user, amount, category, dateExpense, comment }) => (
                             <TableRow key={_id}>
+                                <TableCell>
+                                    { category === 'Needs' ? <ShoppingCartOutlinedIcon color='primary' /> : null }
+                                    { category === 'Wants' ? <LocalBarIcon color='secondary' /> : null }
+                                    { category === 'Culture' ? <MuseumIcon color='secondary' /> : null }
+                                    { category === 'Unexpected' ? <ErrorOutlineIcon color='secondary' /> : null }
+                                </TableCell>
                                 <TableCell>{title}</TableCell>
                                 <TableCell>{user}</TableCell>
                                 <TableCell>{amount}</TableCell>
