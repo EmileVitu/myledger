@@ -7,95 +7,84 @@ import { getExpenses } from '../../actions/expenseActions'
 // Styling
 import { ResponsiveStream } from '@nivo/stream'
 
+
+
 export class ChartStreamDisplay extends Component {
-    
+
     static propTypes = {
         getExpenses: PropTypes.func.isRequired,
         expense: PropTypes.object.isRequired
     }
 
+    componentDidMount() {
+        this.props.getExpenses()
+    }
+
     render() {
 
-        const data = [
-            {
-              "Raoul": 196,
-              "Josiane": 113,
-              "Marcel": 70,
-              "René": 87,
-              "Paul": 83,
-              "Jacques": 68
-            },
-            {
-              "Raoul": 16,
-              "Josiane": 38,
-              "Marcel": 33,
-              "René": 34,
-              "Paul": 81,
-              "Jacques": 111
-            },
-            {
-              "Raoul": 55,
-              "Josiane": 81,
-              "Marcel": 28,
-              "René": 190,
-              "Paul": 132,
-              "Jacques": 36
-            },
-            {
-              "Raoul": 143,
-              "Josiane": 103,
-              "Marcel": 53,
-              "René": 157,
-              "Paul": 56,
-              "Jacques": 18
-            },
-            {
-              "Raoul": 191,
-              "Josiane": 116,
-              "Marcel": 185,
-              "René": 118,
-              "Paul": 65,
-              "Jacques": 75
-            },
-            {
-              "Raoul": 124,
-              "Josiane": 26,
-              "Marcel": 41,
-              "René": 153,
-              "Paul": 114,
-              "Jacques": 118
-            },
-            {
-              "Raoul": 169,
-              "Josiane": 116,
-              "Marcel": 175,
-              "René": 59,
-              "Paul": 119,
-              "Jacques": 150
-            },
-            {
-              "Raoul": 121,
-              "Josiane": 199,
-              "Marcel": 30,
-              "René": 63,
-              "Paul": 73,
-              "Jacques": 70
-            },
-            {
-              "Raoul": 31,
-              "Josiane": 91,
-              "Marcel": 11,
-              "René": 71,
-              "Paul": 142,
-              "Jacques": 151
+        // Pulling out the data from the redux state
+        const { expenses } = this.props.expense
+
+        // Map array by dates with category and amount from the expenses array
+        const filterOne = expenses.map(({ dateExpense, amount, category }) => {
+            const dateObject = new Date(dateExpense)
+            const newDate = dateObject.toLocaleString('en-us', { month: 'long', year: 'numeric' })
+            return {
+                date: newDate,
+                amount,
+                category
             }
-          ]
+        })
+
+        // Sorts by date in an array, containing expenses, an array of expenses at this date
+        const filterTwo = filterOne.reduce((n, d) => {
+            const found = n.find(a => a.date === d.date)
+            const expense = {date: d.date, amount: d.amount, category: d.category }
+            if (found) {
+                found.expenses.push(expense)
+            } else {
+                n.push({
+                    date: d.date,
+                    expenses: [{ 
+                        amount: d.amount,
+                        category: d.category }],
+                    needsTotal: 0,
+                    wantsTotal: 0,
+                    cultureTotal: 0,
+                    unexpectedTotal: 0
+                    })
+            }
+            return n
+        }, [])
+        
+        // Filter each expense of each date and sums them by category
+        const filterThree = filterTwo.map(n => {
+            const categoryFilterNeeds = n.expenses.filter(expense => expense.category === 'Needs')
+            n.needsTotal = categoryFilterNeeds.reduce((n, { amount }) => n + amount, 0)
+            const categoryFilterWants = n.expenses.filter(expense => expense.category === 'Wants')
+            n.wantsTotal = categoryFilterWants.reduce((n, { amount }) => n + amount, 0)
+            const categoryFilterCulture = n.expenses.filter(expense => expense.category === 'Culture')
+            n.cultureTotal = categoryFilterCulture.reduce((n, { amount }) => n + amount, 0)
+            const categoryFilterUnexpected = n.expenses.filter(expense => expense.category === 'Unexpected')
+            n.cultureUnexpected = categoryFilterUnexpected.reduce((n, { amount }) => n + amount, 0)
+            return n
+        })
+
+        // Finally we can map our array in the data array for the barChart
+        const data = filterThree.map(n => {
+            return {
+                "Needs": n.needsTotal,
+                "Wants": n.wantsTotal,
+                "Culture": n.cultureTotal,
+                "Unexpected": n.unexpectedTotal
+              }
+        })
 
         return (
             <div style={{height:500}}>
                     <ResponsiveStream
                         data={data}
-                        keys={[ 'Raoul', 'Josiane', 'Marcel', 'René', 'Paul', 'Jacques' ]}
+                        keys={[ 'Needs', 'Wants', 'Culture', 'Unexpected' ]}
                         margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
                         axisTop={null}
                         axisRight={null}
@@ -135,13 +124,13 @@ export class ChartStreamDisplay extends Component {
                         fill={[
                             {
                                 match: {
-                                    id: 'Paul'
+                                    id: 'Needs'
                                 },
                                 id: 'dots'
                             },
                             {
                                 match: {
-                                    id: 'Marcel'
+                                    id: 'Culture'
                                 },
                                 id: 'squares'
                             }
