@@ -38,27 +38,7 @@ export class ChartPieDisplay extends Component {
         const categoryFilterUnexpected = expenses.filter(expense => expense.category === 'Unexpected')
         const categoryFilterUnexpectedSum = categoryFilterUnexpected.reduce((n, { amount }) => n + amount, 0)
 
-        // Filtering by date
-
-        // const result = expenses.reduce((r, { dateExpense, amount, category }) => {
-        //     const dateObject = new Date(dateExpense)
-        //     const total = expenses.amount*1
-        //     const monthyear = dateObject.toLocaleString('en-us', { month: 'long', year: 'numeric' })
-        //     if(!r[monthyear]){ r[monthyear] = { monthyear, entries: 1 , expense: {expenses}}}
-        //     else r[monthyear].entries++
-        //     return r
-        // }, [])
-
-        // console.log(Object.values(result))
-        // console.log(result.total)
-        // console.log(expenses.amount)
-
-
-        // First filter category --> gives the global selector
-        // Then filter years --> gives the years selector
-        // Then filter the months --> gives the months and years selector
-
-        // --> !!!!! each must return a different array to display in our pie
+        // Must now filter by year, then by month as well (two dropdown selectors)
 
         const data = [
             {
