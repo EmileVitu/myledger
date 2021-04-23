@@ -4,7 +4,9 @@ import {
     OPEN_CHARTBARS_DISPLAY,
     CLOSE_CHARTBARS_DISPLAY, 
     OPEN_CHARTPIE_DISPLAY,
-    CLOSE_CHARTPIE_DISPLAY } from './types'
+    CLOSE_CHARTPIE_DISPLAY, 
+    OPEN_CHARTSTREAM_DISPLAY,
+    CLOSE_CHARTSTREAM_DISPLAY } from './types'
 
 // Table display actions
 export const openTableDisplay = () => {
@@ -39,5 +41,17 @@ export const openChartPieDisplay = () => {
 export const closeChartPieDisplay = () => {
     return {
         type: CLOSE_CHARTPIE_DISPLAY
+    }
+}
+
+// Chart-Stream display actions
+export const openChartStreamDisplay = () => {
+    return {
+        type: OPEN_CHARTSTREAM_DISPLAY
+    }
+}
+export const closeChartStreamDisplay = () => {
+    return {
+        type: CLOSE_CHARTSTREAM_DISPLAY
     }
 }
