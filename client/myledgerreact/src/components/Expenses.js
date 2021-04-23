@@ -10,13 +10,16 @@ import {
     openChartBarsDisplay,
     closeChartBarsDisplay,
     openChartPieDisplay,
-    closeChartPieDisplay } from '../actions/displayActions'
+    closeChartPieDisplay,
+    openChartStreamDisplay,
+    closeChartStreamDisplay } from '../actions/displayActions'
 // Components
 import ExpenseModal from './ExpenseModal'
 import WelcomeDisplay from './display/WelcomeDisplay'
 import TableDisplay from './display/TableDisplay'
 import ChartBarsDisplay from './display/ChartBarsDisplay'
 import ChartPieDisplay from './display/ChartPieDisplay'
+import ChartStreamDisplay from './display/ChartStreamDisplay'
 // Styling
 import { 
     Container, 
@@ -28,13 +31,16 @@ import AssessmentOutlinedIcon from '@material-ui/icons/AssessmentOutlined'
 import PieChartOutlinedIcon from '@material-ui/icons/PieChartOutlined'
 import TimelineOutlinedIcon from '@material-ui/icons/TimelineOutlined'
 
+
+
 class Expenses extends Component {
 
     static propTypes = {
         isExpenseModalOpen: PropTypes.bool,
         isTableDisplayOpen: PropTypes.bool,
         isChartBarsDisplayOpen: PropTypes.bool,
-        isChartPieDisplayOpen: PropTypes.bool
+        isChartPieDisplayOpen: PropTypes.bool,
+        isChartStreamDisplayOpen: PropTypes.bool
     }
 
     toggleExpenseModal = () => {
@@ -44,19 +50,29 @@ class Expenses extends Component {
     toggleTableDisplay = () => {
         if(this.props.isChartBarsDisplayOpen) {this.props.closeChartBarsDisplay()}
         if(this.props.isChartPieDisplayOpen) {this.props.closeChartPieDisplay()}
+        if(this.props.isChartStreamDisplayOpen) {this.props.closeChartStreamDisplay()}
         !this.props.isTableDisplayOpen ? this.props.openTableDisplay() : this.props.closeTableDisplay()
     }
 
     toggleChartBarsDisplay = () => {
         if(this.props.isTableDisplayOpen) {this.props.closeTableDisplay()}
         if(this.props.isChartPieDisplayOpen) {this.props.closeChartPieDisplay()}
+        if(this.props.isChartStreamDisplayOpen) {this.props.closeChartStreamDisplay()}
         !this.props.isChartBarsDisplayOpen ? this.props.openChartBarsDisplay() : this.props.closeChartBarsDisplay()
     }
 
     toggleChartPieDisplay = () => {
         if(this.props.isTableDisplayOpen) {this.props.closeTableDisplay()}
         if(this.props.isChartBarsDisplayOpen) {this.props.closeChartBarsDisplay()}
+        if(this.props.isChartStreamDisplayOpen) {this.props.closeChartStreamDisplay()}
         !this.props.isChartPieDisplayOpen ? this.props.openChartPieDisplay() : this.props.closeChartPieDisplay()
+    }
+
+    toggleChartStreamDisplay = () => {
+        if(this.props.isTableDisplayOpen) {this.props.closeTableDisplay()}
+        if(this.props.isChartBarsDisplayOpen) {this.props.closeChartBarsDisplay()}
+        if(this.props.isChartPieDisplayOpen) {this.props.closeChartPieDisplay()}
+        !this.props.isChartStreamDisplayOpen ? this.props.openChartStreamDisplay() : this.props.closeChartStreamDisplay()
     }
 
     render() {
@@ -73,7 +89,9 @@ class Expenses extends Component {
                     <Button
                         onClick={this.toggleChartPieDisplay}
                         ><PieChartOutlinedIcon /></Button>
-                    <Button><TimelineOutlinedIcon /></Button>
+                    <Button
+                        onClick={this.toggleChartStreamDisplay}
+                        ><TimelineOutlinedIcon /></Button>
                 </ButtonGroup>
 
                 <Button
@@ -91,9 +109,12 @@ class Expenses extends Component {
                 { this.props.isTableDisplayOpen ? <TableDisplay /> : null }
                 { this.props.isChartBarsDisplayOpen ? <ChartBarsDisplay /> : null }
                 { this.props.isChartPieDisplayOpen ? <ChartPieDisplay /> : null }
+                { this.props.isChartStreamDisplayOpen ? <ChartStreamDisplay /> : null }
+                
                 { !this.props.isTableDisplayOpen && 
                     !this.props.isChartBarsDisplayOpen &&
-                    !this.props.isChartPieDisplayOpen ? <WelcomeDisplay /> : null }
+                    !this.props.isChartPieDisplayOpen &&
+                    !this.props.isChartStreamDisplayOpen ? <WelcomeDisplay /> : null }
 
             </Container>
         )
@@ -105,7 +126,8 @@ const mapStateToProps = (state) => ({
     isExpenseModalOpen: state.modal.isExpenseModalOpen,
     isTableDisplayOpen: state.display.isTableDisplayOpen,
     isChartBarsDisplayOpen: state.display.isChartBarsDisplayOpen,
-    isChartPieDisplayOpen: state.display.isChartPieDisplayOpen
+    isChartPieDisplayOpen: state.display.isChartPieDisplayOpen,
+    isChartStreamDisplayOpen: state.display.isChartStreamDisplayOpen
 })
 
 export default connect(mapStateToProps, { 
@@ -116,4 +138,6 @@ export default connect(mapStateToProps, {
     openChartBarsDisplay,
     closeChartBarsDisplay,
     openChartPieDisplay,
-    closeChartPieDisplay })(Expenses)
+    closeChartPieDisplay,
+    openChartStreamDisplay,
+    closeChartStreamDisplay })(Expenses)
