@@ -26,6 +26,7 @@ import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd'
 import TableChartOutlinedIcon from '@material-ui/icons/TableChartOutlined'
 import AssessmentOutlinedIcon from '@material-ui/icons/AssessmentOutlined'
 import PieChartOutlinedIcon from '@material-ui/icons/PieChartOutlined'
+import TimelineOutlinedIcon from '@material-ui/icons/TimelineOutlined'
 
 class Expenses extends Component {
 
@@ -72,7 +73,7 @@ class Expenses extends Component {
                     <Button
                         onClick={this.toggleChartPieDisplay}
                         ><PieChartOutlinedIcon /></Button>
-                    <Button>(Another way to display)</Button>
+                    <Button><TimelineOutlinedIcon /></Button>
                 </ButtonGroup>
 
                 <Button
