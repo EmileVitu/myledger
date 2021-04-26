@@ -20,6 +20,7 @@ import TableDisplay from './display/TableDisplay'
 import ChartBarsDisplay from './display/ChartBarsDisplay'
 import ChartPieDisplay from './display/ChartPieDisplay'
 import ChartStreamDisplay from './display/ChartStreamDisplay'
+import LoadingDisplay from './display/LoadingDisplay'
 // Styling
 import { 
     Container, 
@@ -33,6 +34,7 @@ import TimelineOutlinedIcon from '@material-ui/icons/TimelineOutlined'
 
 
 
+
 class Expenses extends Component {
 
     static propTypes = {
@@ -40,7 +42,8 @@ class Expenses extends Component {
         isTableDisplayOpen: PropTypes.bool,
         isChartBarsDisplayOpen: PropTypes.bool,
         isChartPieDisplayOpen: PropTypes.bool,
-        isChartStreamDisplayOpen: PropTypes.bool
+        isChartStreamDisplayOpen: PropTypes.bool,
+        loading: PropTypes.bool
     }
 
     toggleExpenseModal = () => {
@@ -110,11 +113,13 @@ class Expenses extends Component {
                 { this.props.isChartBarsDisplayOpen ? <ChartBarsDisplay /> : null }
                 { this.props.isChartPieDisplayOpen ? <ChartPieDisplay /> : null }
                 { this.props.isChartStreamDisplayOpen ? <ChartStreamDisplay /> : null }
-                
+                { this.props.loading ? <LoadingDisplay /> : null }
+
                 { !this.props.isTableDisplayOpen && 
                     !this.props.isChartBarsDisplayOpen &&
                     !this.props.isChartPieDisplayOpen &&
-                    !this.props.isChartStreamDisplayOpen ? <WelcomeDisplay /> : null }
+                    !this.props.isChartStreamDisplayOpen &&
+                    !this.props.loading ? <WelcomeDisplay /> : null }
 
             </Container>
         )
@@ -127,7 +132,8 @@ const mapStateToProps = (state) => ({
     isTableDisplayOpen: state.display.isTableDisplayOpen,
     isChartBarsDisplayOpen: state.display.isChartBarsDisplayOpen,
     isChartPieDisplayOpen: state.display.isChartPieDisplayOpen,
-    isChartStreamDisplayOpen: state.display.isChartStreamDisplayOpen
+    isChartStreamDisplayOpen: state.display.isChartStreamDisplayOpen,
+    loading: state.expense.loading
 })
 
 export default connect(mapStateToProps, { 
